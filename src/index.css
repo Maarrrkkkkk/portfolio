@@ -1,0 +1,212 @@
+/* Tailwind base styles */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* --- Custom Styles for Professional Portfolio --- */
+
+/* Custom bg utility classes for Tailwind custom colors */
+.bg-primary {
+  background-color: #00ADB5;
+}
+.bg-dark {
+  background-color: #222831;
+}
+.bg-dark2 {
+  background-color: #393E46;
+}
+.bg-light {
+  background-color: #EEEEEE;
+}
+
+/* Support for bg-primary/10 (10% opacity) */
+.bg-primary\/10 {
+  background-color: rgba(0, 173, 181, 0.1);
+}
+
+/* Typography improvements */
+body,
+html {
+  font-family: "Poppins", "Inter", "Segoe UI", Arial, sans-serif;
+  background: #EEEEEE;
+  color: #222831;
+  scroll-behavior: smooth;
+  font-size: clamp(14px, 2vw, 16px);
+}
+
+/* Rounded button style for Ant Design tags and menu items */
+.rounded-button,
+.!rounded-button {
+  border-radius: 9999px !important;
+  padding: 0.5rem 1rem !important;
+  font-size: clamp(0.875rem, 2vw, 1rem);
+  font-weight: 500 !important;
+  background: transparent;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.3s;
+  box-shadow: none;
+}
+
+/* Enhanced Sidebar and Drawer Menu Styles */
+.sidebar-menu .ant-menu-item {
+  height: auto;
+  line-height: normal;
+  padding: 0.75rem 1rem;
+  transition: all 0.3s ease;
+  border-radius: 0 25px 25px 0;
+  margin: 0.25rem 0;
+}
+
+.sidebar-menu .ant-menu-item:hover {
+  background-color: rgba(0, 173, 181, 0.15);
+  color: #00ADB5;
+  transform: translateX(5px);
+  box-shadow: 0 4px 12px rgba(0, 173, 181, 0.2);
+}
+
+.sidebar-menu .ant-menu-item.ant-menu-item-selected {
+  background-color: rgba(0, 173, 181, 0.1);
+  color: #00ADB5;
+  border-left: 3px solid #00ADB5;
+  font-weight: 600;
+}
+
+.sidebar-menu .ant-menu-item.ant-menu-item-selected:hover {
+  background-color: rgba(0, 173, 181, 0.2);
+  color: #00ADB5;
+}
+
+/* Name highlight animation */
+@keyframes nameGlow {
+  0% {
+    text-shadow: 0 0 10px rgba(0, 173, 181, 0.3);
+  }
+  50% {
+    text-shadow: 0 0 20px rgba(0, 173, 181, 0.6);
+  }
+  100% {
+    text-shadow: 0 0 10px rgba(0, 173, 181, 0.3);
+  }
+}
+
+.name-highlight {
+  animation: nameGlow 3s ease-in-out infinite;
+}
+
+/* Custom scrollbar for sidebar and content */
+::-webkit-scrollbar {
+  width: 8px;
+  background: #222831;
+}
+::-webkit-scrollbar-thumb {
+  background: #393E46;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #00ADB5;
+}
+
+/* Portfolio card hover effect */
+.hover\:scale-105:hover {
+  transform: scale(1.05);
+}
+.hover\:shadow-xl:hover {
+  box-shadow: 0 8px 32px 0 rgba(0, 173, 181, 0.18);
+}
+.hover\:border-primary:hover {
+  border-color: #00ADB5;
+}
+
+/* Ant Design Drawer background */
+.ant-drawer-content {
+  background: #222831;
+}
+
+/* Timeline dot alignment fix */
+.ant-timeline-item-head {
+  margin-top: 0.2rem;
+}
+
+/* Back to Top Button Animation */
+.fixed.bottom-8.right-8 {
+  transition: opacity 0.3s, background 0.2s;
+  opacity: 0.95;
+}
+.fixed.bottom-8.right-8:hover {
+  opacity: 1;
+  background: #00ADB5;
+}
+
+/* Footer link hover effect */
+.footer-link,
+.text-dark2:hover {
+  color: #00ADB5;
+  text-decoration: underline;
+}
+.ant-btn.bg-primary.hovered,
+.bg-primary.hovered {
+  background-color: #393E46;
+  color: #fff;
+}
+
+/* Responsive image for profile and portfolio */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Responsive typography adjustments */
+@media (max-width: 640px) {
+
+  .ant-typography h1 {
+    font-size: clamp(2.25rem, 8vw, 2.5rem);
+  }
+  .ant-typography h2 {
+    font-size: clamp(2rem, 7vw, 2.25rem);
+  }
+  .ant-typography h3 {
+    font-size: clamp(2.5rem, 6vw, 1.75rem);
+  }
+  .ant-typography h4 {
+    font-size: clamp(2.5rem, 5vw, 1.5rem);
+  }
+  .ant-typography {
+    font-size: clamp(1.5rem, 3vw, 1.25rem);
+  }
+}
+
+/* Remove outline for mouse users, keep for keyboard users */
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Ant Design Timeline item content spacing */
+.ant-timeline-item-content {
+  margin-top: 0.2rem;
+}
+
+/* Utility: Hide scrollbars on mobile for a cleaner look */
+@media (max-width: 768px) {
+  ::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Utility: Smoother transitions for interactive elements */
+button,
+a,
+.ant-btn,
+.ant-menu-item {
+  transition: color 0.2s, background 0.2s, box-shadow 0.2s, transform 0.3s;
+}
+
+/* Social media icons hover effect */
+.social-icon {
+  transition: all 0.3s ease;
+}
+
+.social-icon:hover {
+  transform: translateY(-2px);
+  filter: drop-shadow(0 4px 8px rgba(0, 173, 181, 0.3));
+}
+
