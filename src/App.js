@@ -453,7 +453,7 @@ const Portfolio = () => {
                     <div className="flex items-center gap-2 mb-1">
                       <TrophyOutlined className="text-[#00ADB5] text-lg" />
                       <Title level={4} className="text-lg font-bold mb-0 text-[#222831]">
-                        Enhancing Undergraduate Capstone Projects and Research
+                        Enhancing Undergraduate Capstone Projects and Research With Recommender System, Automated Grading and Scheduling
                       </Title>
                     </div>
                     <Text className="text-[#00ADB5] font-semibold text-xs sm:text-sm mb-1">
