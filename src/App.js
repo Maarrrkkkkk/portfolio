@@ -406,15 +406,19 @@ const Portfolio = () => {
                       </Text>
                       <ul className="list-disc ml-5 mt-3 space-y-1 text-sm sm:text-base">
                         <li>
-                          <span className="font-semibold text-[#393E46]">HTML</span>
+                          <Tag className="bg-[#393E46] text-[#EEEEEE] border-none !rounded-button whitespace-nowrap hover:bg-[#00ADB5] transition-all duration-200 text-xs sm:text-sm">
+                            HTML
+                          </Tag>
                         </li>
                         <li>
-                          <span className="font-semibold text-[#393E46]">CSS</span>
+                          <Tag className="bg-[#393E46] text-[#EEEEEE] border-none !rounded-button whitespace-nowrap hover:bg-[#00ADB5] transition-all duration-200 text-xs sm:text-sm">
+                            CSS
+                          </Tag>
                         </li>
                         <li>
-                          <span className="font-semibold text-[#393E46]">
+                          <Tag className="bg-[#393E46] text-[#EEEEEE] border-none !rounded-button whitespace-nowrap hover:bg-[#00ADB5] transition-all duration-200 text-xs sm:text-sm">
                             JavaScript
-                          </span>
+                          </Tag>
                         </li>
                       </ul>
                     </div>
@@ -424,14 +428,14 @@ const Portfolio = () => {
                       </Text>
                       <ul className="list-disc ml-5 mt-3 space-y-1 text-sm sm:text-base">
                         <li>
-                          <span className="font-semibold text-[#393E46]">
+                          <Tag className="bg-[#393E46] text-[#EEEEEE] border-none !rounded-button whitespace-nowrap hover:bg-[#00ADB5] transition-all duration-200 text-xs sm:text-sm">
                             Bootstrap
-                          </span>
+                          </Tag>
                         </li>
                         <li>
-                          <span className="font-semibold text-[#393E46]">
+                          <Tag className="bg-[#393E46] text-[#EEEEEE] border-none !rounded-button whitespace-nowrap hover:bg-[#00ADB5] transition-all duration-200 text-xs sm:text-sm">
                             Tailwind CSS
-                          </span>
+                          </Tag>
                         </li>
                       </ul>
                     </div>
@@ -441,19 +445,19 @@ const Portfolio = () => {
                       </Text>
                       <ul className="list-disc ml-5 mt-3 space-y-1 text-sm sm:text-base">
                         <li>
-                          <span className="font-semibold text-[#393E46]">
+                          <Tag className="bg-[#393E46] text-[#EEEEEE] border-none !rounded-button whitespace-nowrap hover:bg-[#00ADB5] transition-all duration-200 text-xs sm:text-sm">
                             Responsive Design
-                          </span>
+                          </Tag>
                         </li>
                         <li>
-                          <span className="font-semibold text-[#393E46]">
+                          <Tag className="bg-[#393E46] text-[#EEEEEE] border-none !rounded-button whitespace-nowrap hover:bg-[#00ADB5] transition-all duration-200 text-xs sm:text-sm">
                             UI Implementation
-                          </span>
+                          </Tag>
                         </li>
                         <li>
-                          <span className="font-semibold text-[#393E46]">
+                          <Tag className="bg-[#393E46] text-[#EEEEEE] border-none !rounded-button whitespace-nowrap hover:bg-[#00ADB5] transition-all duration-200 text-xs sm:text-sm">
                             Cross-browser Compatibility
-                          </span>
+                          </Tag>
                         </li>
                       </ul>
                     </div>
