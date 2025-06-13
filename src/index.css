@@ -147,7 +147,7 @@ img {
 /* Typography improvements */
 body,
 html {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Poppins', Arial, Helvetica, sans-serif;
   background: #eeeeee;
   color: #222831;
   scroll-behavior: smooth;

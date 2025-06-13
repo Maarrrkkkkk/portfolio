@@ -536,9 +536,9 @@ const Portfolio = () => {
             <div className="mb-10" id="education">
               <Title
                 level={2}
-                className="text-lg sm:text-xl font-bold text-[#222831] mb-4 flex items-center"
+                className="text-lg sm:text-xl font-bold text-[#222831] mb-8 flex items-center"
               >
-                <BookOutlined className="mr-2 text-primary" /> Education
+                <BookOutlined className="mr-2 text-primary" /> EDUCATION
               </Title>
               <Timeline
                 className="ml-2 sm:ml-4"
@@ -551,7 +551,7 @@ const Portfolio = () => {
                           level={4}
                           className="text-base sm:text-lg font-bold text-[#222831] mb-1"
                         >
-                          EASTERN VISAYAS STATE UNIVERSITY
+                          Eastern Visayas State University
                         </Title>
                         <Text className="text-[#393E46] block mb-2 text-xs sm:text-sm">
                           (2021-2025)
@@ -576,9 +576,9 @@ const Portfolio = () => {
             <div className="mb-10" id="projects">
               <Title
                 level={2}
-                className="text-lg sm:text-xl font-bold text-[#222831] mb-4 flex items-center"
+                className="text-lg sm:text-xl font-bold text-[#222831] mb-8 flex items-center"
               >
-                <LaptopOutlined className="mr-2 text-primary" /> Academic Projects & Experience
+                <LaptopOutlined className="mr-2 text-primary" /> ACADEMIC PROJECTS & EXPERIENCE
               </Title>
               <Timeline
                 className="ml-2 sm:ml-4"
