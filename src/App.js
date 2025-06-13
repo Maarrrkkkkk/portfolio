@@ -1,8 +1,5 @@
-// Organized and presentable import section
-import 'antd/dist/reset.css'; // Add this at the top
+import 'antd/dist/reset.css';
 import React, { useState, useEffect } from 'react';
-
-// Ant Design Components
 import {
   Layout,
   Typography,
@@ -15,9 +12,11 @@ import {
   Drawer,
   Button,
   Card,
+  Space,
+  Avatar,
+  Badge,
+  FloatButton
 } from 'antd';
-
-// Ant Design Icons
 import {
   EnvironmentOutlined,
   MailOutlined,
@@ -32,768 +31,761 @@ import {
   TrophyFilled,
   MenuOutlined,
   StarOutlined,
+  FacebookFilled,
+  UpOutlined,
+  CodeOutlined,
+  ToolOutlined,
+  TeamOutlined,
+  CommentOutlined,
+  BulbOutlined
 } from '@ant-design/icons';
 
-// Destructure Ant Design Layout and Typography
 const { Header, Sider, Content } = Layout;
 const { Title, Text, Paragraph } = Typography;
 
 const Portfolio = () => {
   const [activeSection, setActiveSection] = useState('about');
   const [mobileDrawerVisible, setMobileDrawerVisible] = useState(false);
-  const [showTopBtn, setShowTopBtn] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
-  // Scroll to section
   const scrollToSection = (sectionId) => {
     setActiveSection(sectionId);
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
     setMobileDrawerVisible(false);
   };
 
-  // Show back-to-top button on scroll
   useEffect(() => {
-    const handleScroll = () => setShowTopBtn(window.scrollY > 300);
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+
+      // Update active section based on scroll position
+      const sections = ['about', 'skills', 'education', 'projects', 'portfolio', 'achievements', 'contact'];
+      for (const section of sections) {
+        const element = document.getElementById(section);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          if (rect.top <= 100 && rect.bottom >= 100) {
+            setActiveSection(section);
+            break;
+          }
+        }
+      }
+    };
+
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleBackToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
   const menuItems = [
     { key: 'about', icon: <UserOutlined />, label: 'About' },
+    { key: 'skills', icon: <CodeOutlined />, label: 'Skills' },
     { key: 'education', icon: <BookOutlined />, label: 'Education' },
     { key: 'projects', icon: <LaptopOutlined />, label: 'Projects' },
     { key: 'portfolio', icon: <ProjectOutlined />, label: 'Portfolio' },
     { key: 'achievements', icon: <TrophyFilled />, label: 'Achievements' },
+    { key: 'contact', icon: <MailOutlined />, label: 'Contact' },
   ];
 
-  return (
-    <Layout className="min-h-screen">
-      {/* Mobile Header */}
-      <Header
-        className="fixed w-full z-50 flex items-center justify-between px-4 sm:px-6 md:hidden"
-        style={{ background: '#222831', height: '56px' }}
-      >
-        <div className="flex items-center">
-          <img
-            src="/profile.jpg"
-            alt="Profile"
-            className="w-8 h-8 rounded-full object-cover border-2 border-[#00ADB5] mr-2"
-          />
-          <Text className="text-white text-sm font-semibold"></Text>
-        </div>
-        <Button
-          type="text"
-          icon={<MenuOutlined className="text-white text-lg" />}
-          onClick={() => setMobileDrawerVisible(true)}
-          className="md:hidden"
-        />
-      </Header>
+  const skills = {
+    languages: ['HTML', 'CSS', 'JavaScript'],
+    frameworks: ['Bootstrap', 'Tailwind CSS'],
+    tools: ['Git', 'GitHub', 'VS Code'],
+    softSkills: [
+      'Works Under Pressure',
+      'Team Collaboration',
+      'Time Management',
+      'Communication'
+    ]
+  };
 
-      {/* Mobile Drawer */}
-      <Drawer
-        title="Menu"
-        placement="right"
-        onClose={() => setMobileDrawerVisible(false)}
-        open={mobileDrawerVisible}
-        bodyStyle={{ background: '#222831', padding: 0 }}
-        headerStyle={{ background: '#222831', border: 'none', color: '#EEEEEE' }}
-        className="md:hidden"
-      >
-        <Menu
-          mode="vertical"
-          selectedKeys={[activeSection]}
-          style={{ background: '#222831', border: 'none' }}
-          className="sidebar-menu"
+  return (
+    <Layout className="min-h-screen bg-gray-50">
+     {/* Mobile Header */}
+        <Header
+          className={`fixed w-full z-50 flex items-center justify-between px-4 transition-all duration-300 ${isScrolled ? 'py-2 shadow-lg bg-[#222831]' : 'py-4 bg-transparent'} sm:px-6 md:hidden`}
+          style={{ height: isScrolled ? '60px' : '80px' }}
         >
-          {menuItems.map((item) => (
-            <Menu.Item
-              key={item.key}
-              onClick={() => scrollToSection(item.key)}
-              style={{
-                color: activeSection === item.key ? '#00ADB5' : '#EEEEEE',
-                borderLeft:
-                  activeSection === item.key ? '3px solid #00ADB5' : '3px solid transparent',
-                backgroundColor:
-                  activeSection === item.key ? 'rgba(0, 173, 181, 0.1)' : 'transparent',
-                borderRadius: '0 25px 25px 0',
-                margin: '4px 0',
-                fontWeight: activeSection === item.key ? '600' : '400',
-                padding: '0.75rem 1rem',
-              }}
-              className="sidebar-menu-item !rounded-button whitespace-nowrap cursor-pointer"
-            >
-              <span
-                className={`inline-flex items-center gap-2 text-sm sm:text-base ${
-                  activeSection === item.key ? 'text-[#00ADB5]' : ''
+          {/* Hamburger menu on the left */}
+          <Button
+            type="text"
+            icon={<MenuOutlined className="text-white text-lg" />}
+            onClick={() => setMobileDrawerVisible(true)}
+            className="md:hidden"
+          />
+
+          {/* Spacer to push profile to the right */}
+          <div className="flex-1"></div>
+
+          {/* Profile on the right */}
+          <div className="flex items-center">
+            {isScrolled ? (
+              <>
+                <Avatar src="/profile.jpg" size={40} className="border-2 border-[#00ADB5]" />
+              </>
+            ) : null}
+          </div>
+        </Header>
+      {/* Mobile Drawer */}
+        <Drawer
+          title={
+            <div className="flex items-center">
+              <Text className="text-white">Menu</Text>
+            </div>
+          }
+          placement="left"
+          width={200}
+          onClose={() => setMobileDrawerVisible(false)}
+          open={mobileDrawerVisible}
+          bodyStyle={{ background: '#222831', padding: 0 }}
+          headerStyle={{ background: '#222831', border: 'none' }}
+          className="md:hidden"
+        >
+          <Menu
+            mode="vertical"
+            selectedKeys={[activeSection]}
+            style={{ background: '#222831', border: 'none' }}
+            className="sidebar-menu"
+          >
+            {menuItems.map((item) => (
+              <Menu.Item
+                key={item.key}
+                onClick={() => scrollToSection(item.key)}
+                className={`sidebar-menu-item !rounded-button whitespace-nowrap cursor-pointer transition-all duration-200 ${
+                  activeSection === item.key ? 'active-menu-item' : ''
                 }`}
               >
-                {item.icon} {item.label}
-              </span>
-            </Menu.Item>
-          ))}
-        </Menu>
-      </Drawer>
+                <span className="inline-flex items-center gap-3 text-sm sm:text-base">
+                  {React.cloneElement(item.icon, {
+                    className: activeSection === item.key ? 'text-[#00ADB5]' : 'text-gray-300'
+                  })}
+                  {item.label}
+                </span>
+              </Menu.Item>
+            ))}
+          </Menu>
+        </Drawer>
 
       {/* Desktop Sidebar */}
       <Sider
-        width={280}
-        className="hidden md:block"
+        width={300}
+        className="hidden md:block fixed h-screen overflow-auto"
         style={{
-          position: 'fixed',
-          height: '100vh',
-          background: '#222831',
-          overflow: 'auto',
+          background: 'linear-gradient(180deg, #222831 0%, #1a1e25 100%)',
+          boxShadow: '5px 0 15px rgba(0, 0, 0, 0.10)',
+          borderRight: '1.5px solid #222831',
+          zIndex: 20,
         }}
       >
-        <div className="flex flex-col justify-between p-6 h-full">
+        <div className="flex flex-col justify-between p-7 h-full">
           <div>
-            <div className="relative mb-6 mt-4 flex justify-center">
-              <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-[#00ADB5] shadow-lg hover:shadow-2xl hover:border-[#00D4DD] transition-all duration-300">
-                <img
-                  src="/profile.jpg"
-                  alt="Profile"
-                  className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-300"
-                />
+            {/* Profile Image with Glow and Hover */}
+            <div className="flex justify-center mt-6 mb-7">
+              <div className="relative group">
+                <div className="w-28 h-28 rounded-full overflow-hidden border-4 border-[#00ADB5] shadow-xl transition-all duration-500 group-hover:border-[#00D4DD] group-hover:shadow-2xl">
+                  <img
+                    src="/profile.jpg"
+                    alt="Profile"
+                    className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-110"
+                  />
+                </div>
+                {/* Subtle Glow Effect */}
+                <div className="absolute inset-0 rounded-full pointer-events-none group-hover:shadow-[0_0_24px_6px_#00ADB5] transition-all duration-500"></div>
               </div>
             </div>
-            <div className="text-center mb-6">
+
+            {/* Name & Title */}
+            <div className="text-center mb-7">
               <Title
                 level={3}
-                className="text-lg md:text-xl font-bold mb-1 hover:text-[#00ADB5] transition-colors duration-300 cursor-default relative name-highlight"
+                className="text-2xl font-bold mb-1 relative name-highlight"
                 style={{
-                  background: 'linear-gradient(135deg, #EEEEEE 0%, #00ADB5 100%)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text',
-                  lineHeight: '1.4',
+                  color: '#EEEEEE',
+                  letterSpacing: '0.5px',
+                  lineHeight: '1.3',
+                  marginBottom: 0,
                 }}
               >
                 Mark Anthony Aguirre
               </Title>
-              <Text className="text-sm md:text-base text-gray-300 italic hover:text-[#00ADB5] transition-colors duration-300">
+              <Text className="text-base text-[#00ADB5] font-medium block mb-1 tracking-wide">
                 Front-end Web Builder
               </Text>
             </div>
+
+            {/* Menu */}
             <Menu
               mode="vertical"
               selectedKeys={[activeSection]}
-              style={{ background: '#222831', border: 'none', width: '100%' }}
+              style={{ background: 'transparent', border: 'none', width: '100%' }}
               className="sidebar-menu"
             >
               {menuItems.map((item) => (
                 <Menu.Item
                   key={item.key}
                   onClick={() => scrollToSection(item.key)}
+                  className={`sidebar-menu-item !rounded-button whitespace-nowrap cursor-pointer transition-all duration-200 ${
+                    activeSection === item.key ? 'active-menu-item' : ''
+                  }`}
                   style={{
+                    margin: '6px 0',
+                    fontWeight: activeSection === item.key ? 600 : 400,
                     color: activeSection === item.key ? '#00ADB5' : '#EEEEEE',
-                    borderLeft:
-                      activeSection === item.key ? '3px solid #00ADB5' : '3px solid transparent',
-                    backgroundColor:
-                      activeSection === item.key ? 'rgba(0, 173, 181, 0.1)' : 'transparent',
+                    background: activeSection === item.key ? 'rgba(0,173,181,0.10)' : 'transparent',
+                    borderLeft: activeSection === item.key ? '3px solid #00ADB5' : '3px solid transparent',
                     borderRadius: '0 25px 25px 0',
-                    margin: '4px 0',
-                    fontWeight: activeSection === item.key ? '600' : '400',
-                    padding: '0.75rem 1rem',
+                    padding: '0.85rem 1.2rem',
+                    fontSize: '1rem',
                   }}
-                  className="sidebar-menu-item !rounded-button whitespace-nowrap cursor-pointer"
                 >
-                  <span
-                    className={`inline-flex items-center gap-2 text-sm md:text-base ${
-                      activeSection === item.key ? 'text-[#00ADB5]' : ''
-                    }`}
-                  >
-                    {item.icon} {item.label}
+                  <span className="inline-flex items-center gap-3">
+                    {React.cloneElement(item.icon, {
+                      className: activeSection === item.key ? 'text-[#00ADB5]' : 'text-gray-300',
+                      style: { fontSize: '1.2em', transition: 'color 0.2s' },
+                    })}
+                    {item.label}
                   </span>
                 </Menu.Item>
               ))}
             </Menu>
           </div>
-          <div className="text-center text-primary mt-6">
-            <Text className="text-xs text-gray-400">
-              © 2025 Mark Anthony Aguirre. All rights reserved.
+
+          {/* Footer */}
+          <div className="text-center mt-8">
+            <Divider style={{ borderColor: '#393e46', margin: '18px 0' }} />
+            <Text className="text-xs text-gray-500 tracking-wide">
+              © {new Date().getFullYear()} Mark Anthony Aguirre<br />
+              <span className="text-[#00ADB5]">All rights reserved.</span>
             </Text>
           </div>
         </div>
       </Sider>
 
       {/* Main Content */}
-      <Layout
-        className="md:ml-[280px] ml-0"
-        style={{
-          marginTop: '56px',
-          background: '#EEEEEE',
-          minHeight: 'calc(100vh - 56px)',
-        }}
-      >
+      <Layout className="md:ml-[300px] ml-0" style={{ minHeight: '100vh' }}>
         <Content className="p-4 sm:p-6 md:p-10">
-          <div className="max-w-3xl mx-auto">
+          <div className="max-w-4xl mx-auto">
             {/* Mobile Profile */}
-            <div className="md:hidden mb-8 pt-6">
+            <div className="md:hidden mb-8 pt-16">
               <div className="flex flex-col items-center">
-                <div className="relative mb-4">
-                  <div className="w-28 h-28 rounded-full overflow-hidden border-4 border-[#00ADB5] shadow-lg">
+                <div className="relative group mb-4">
+                  <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-[#00ADB5] shadow-lg transition-all duration-500 group-hover:border-[#00D4DD] group-hover:shadow-xl">
                     <img
                       src="/profile.jpg"
                       alt="Profile"
-                      className="w-full h-full object-cover object-top"
+                      className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-110"
                     />
                   </div>
                 </div>
                 <div className="text-center">
-                  <Title
-                    level={3}
-                    className="text-lg sm:text-xl font-bold text-[#222831] mb-1"
-                  >
+                  <Title level={3} className="text-xl sm:text-2xl font-bold text-[#222831] mb-1">
                     Mark Anthony Aguirre
                   </Title>
-                  <Text className="text-sm sm:text-base text-[#393E46] italic">
+                  <Text className="text-sm sm:text-base text-[#393E46]">
                     Front-end Web Builder
                   </Text>
                 </div>
               </div>
             </div>
 
-            {/* Desktop Header */}
-            <div className="hidden md:block mb-8 pt-6">
-              <Title
-                level={1}
-                className="text-2xl md:text-3xl font-bold text-[#222831] mb-1"
-              >
-                Mark Anthony Aguirre
-              </Title>
-              <Text className="text-base md:text-lg text-[#393E46] italic">
-                Front-end Web Builder
-              </Text>
-            </div>
-
             {/* About Me */}
-            <div className="mb-10" id="about">
-              <Title
-                level={2}
-                className="text-lg sm:text-xl font-bold text-[#222831] mb-4 flex items-center"
-              >
-                <UserOutlined className="mr-2 text-primary" /> About Me
-              </Title>
-              <Card
-                className="bg-gradient-to-r from-[#EEEEEE] to-[#D4E6F1] rounded-lg shadow-lg p-4 sm:p-6 transition-all duration-300 hover:shadow-xl"
-                style={{ border: '2px solid #00ADB5' }}
-              >
-                <Paragraph className="text-[#393E46] text-sm sm:text-base leading-relaxed">
-                  BSIT graduate and aspiring front-end developer with project-based experience in building web applications. Passionate about building practical solutions that improve user experience and eager to contribute to meaningful projects and continue learning in a collaborative environment.
-                </Paragraph>
-              </Card>
-            </div>
-
-            {/* Contact */}
-            <div className="mb-10" id="contact">
-              <Title
-                level={2}
-                className="text-lg sm:text-xl font-bold text-[#222831] mb-4 flex items-center"
-              >
-                <MailOutlined className="mr-2 text-primary" /> Get in Touch
-              </Title>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {/* Phone */}
-                <Card
-                  className="bg-white rounded-lg shadow-md p-4 hover:shadow-xl transition-all duration-300"
-                  hoverable
-                >
-                  <div className="flex items-center mb-3">
-                    <PhoneOutlined className="mr-2 text-primary text-lg" />
-                    <Text className="text-dark2 font-medium text-sm sm:text-base">
-                      0993-425-3793
-                    </Text>
-                  </div>
-                  <Button
-                    type="primary"
-                    href="tel:0993-425-3793"
-                    className="bg-primary border-none transition-colors duration-200 text-sm sm:text-base w-full sm:w-auto"
-                    style={{ color: '#fff' }}
-                    icon={<PhoneOutlined />}
-                  >
-                    Call Me
-                  </Button>
-                </Card>
-                {/* Email */}
-                <Card
-                  className="bg-white rounded-lg shadow-md p-4 hover:shadow-xl transition-all duration-300"
-                  hoverable
-                >
-                  <div className="flex items-center mb-3">
-                    <MailOutlined className="mr-2 text-primary text-lg" />
-                    <Text className="text-dark2 font-medium text-sm sm:text-base break-all">
-                      markanthonyaguirre1234@gmail.com
-                    </Text>
-                  </div>
-                  <Button
-                    type="primary"
-                    href="mailto:markanthonyaguirre1234@gmail.com"
-                    className="bg-primary border-none transition-colors duration-200 text-sm sm:text-base w-full sm:w-auto"
-                    style={{ color: '#fff' }}
-                    icon={<MailOutlined />}
-                  >
-                    Email Me
-                  </Button>
-                </Card>
-                {/* Location */}
-                <Card
-                  className="bg-white rounded-lg shadow-md p-4 hover:shadow-xl transition-all duration-300"
-                  hoverable
-                >
-                  <div className="flex items-center mb-3">
-                    <EnvironmentOutlined className="mr-2 text-primary text-lg" />
-                    <Text className="text-dark2 font-medium text-sm sm:text-base">
-                      Borseth, Alangalang, Leyte
-                    </Text>
-                  </div>
-                  <Button
-                    type="primary"
-                    href="https://maps.google.com/?q=Borseth,Alangalang,Leyte"
-                    target="_blank"
-                    className="bg-primary border-none transition-colors duration-200 text-sm sm:text-base w-full sm:w-auto"
-                    style={{ color: '#fff' }}
-                    icon={<EnvironmentOutlined />}
-                  >
-                    View on Map
-                  </Button>
-                </Card>
-                {/* GitHub */}
-                <Card
-                  className="bg-white rounded-lg shadow-md p-4 hover:shadow-xl transition-all duration-300"
-                  hoverable
-                >
-                  <div className="flex items-center mb-3">
-                    <GithubOutlined className="mr-2 text-primary text-lg" />
-                    <Text className="text-dark2 font-medium text-sm sm:text-base">
-                      github.com/Maarrrkkkkk
-                    </Text>
-                  </div>
-                  <Button
-                    type="primary"
-                    href="https://github.com/Maarrrkkkkk"
-                    target="_blank"
-                    className="bg-primary border-none transition-colors duration-200 text-sm sm:text-base w-full sm:w-auto"
-                    style={{ color: '#fff' }}
-                    icon={<GithubOutlined />}
-                  >
-                    Visit GitHub
-                  </Button>
-                </Card>
+            <section id="about" className="mb-16 scroll-mt-16">
+              <div className="flex items-center mb-6">
+                <div className="w-8 h-8 bg-[#00ADB5] rounded-full flex items-center justify-center mr-3">
+                  <UserOutlined className="text-white" />
+                </div>
+                <Title level={2} className="text-xl sm:text-2xl font-bold text-[#222831] mb-0">
+                  About Me
+                </Title>
               </div>
-            </div>
+              <Card
+                className="bg-white rounded-xl shadow-lg p-6 transition-all duration-300 hover:shadow-xl border-l-4 border-[#00ADB5]"
+              >
+                <Paragraph className="text-[#393E46] text-base leading-relaxed mb-4">
+                 BSIT graduate and aspiring front-end developer with project-based experience in building web applications. Passionate about building practical solutions that improve user experience and eager to contribute to meaningful projects and continue learning in a collaborative environment.
+                </Paragraph>
+                
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6">
+                  {[
+                    { icon: <CodeOutlined />, label: '2+ Projects' },
+                    { icon: <TrophyOutlined />, label: '4 Awards' },
+                    { icon: <ToolOutlined />, label: '10+ Tools' },
+                    { icon: <BookOutlined />, label: 'BSIT Degree' }
+                  ].map((item, index) => (
+                    <div key={index} className="bg-gray-50 p-3 rounded-lg text-center hover:bg-[#00ADB5] hover:text-white transition-colors">
+                      <div className="text-xl mb-1">{item.icon}</div>
+                      <Text className="text-sm font-medium">{item.label}</Text>
+                    </div>
+                  ))}
+                </div>
+              </Card>
+            </section>
 
             {/* Skills */}
-            <div className="mb-10" id="skills">
-              <Title
-                level={2}
-                className="text-lg sm:text-xl font-bold text-[#222831] mb-4 flex items-center"
-              >
-                <LaptopOutlined className="mr-2 text-primary" /> My Skills
-              </Title>
-              <Card className="bg-white rounded-lg shadow-md p-4 sm:p-6">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  {/* Left */}
-                  <div>
-                    <div className="mb-4">
-                      <Text className="text-[#222831] font-semibold text-sm sm:text-base">
-                        Languages & Technologies
-                      </Text>
-                      <ul className="list-disc ml-5 mt-3 space-y-1 text-sm sm:text-base">
-                        <li>
-                          <Tag className="bg-[#393E46] text-[#EEEEEE] border-none !rounded-button whitespace-nowrap hover:bg-[#00ADB5] transition-all duration-200 text-xs sm:text-sm">
-                            HTML
-                          </Tag>
-                        </li>
-                        <li>
-                          <Tag className="bg-[#393E46] text-[#EEEEEE] border-none !rounded-button whitespace-nowrap hover:bg-[#00ADB5] transition-all duration-200 text-xs sm:text-sm">
-                            CSS
-                          </Tag>
-                        </li>
-                        <li>
-                          <Tag className="bg-[#393E46] text-[#EEEEEE] border-none !rounded-button whitespace-nowrap hover:bg-[#00ADB5] transition-all duration-200 text-xs sm:text-sm">
-                            JavaScript
-                          </Tag>
-                        </li>
-                      </ul>
+            <section id="skills" className="mb-16 scroll-mt-16">
+              <div className="flex items-center mb-6">
+                <div className="w-8 h-8 bg-[#00ADB5] rounded-full flex items-center justify-center mr-3">
+                  <CodeOutlined className="text-white" />
+                </div>
+                <Title level={2} className="text-xl sm:text-2xl font-bold text-[#222831] mb-0">
+                  Skills & Expertise
+                </Title>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Technical Skills */}
+                <Card
+                  title={
+                    <div className="flex items-center">
+                      <LaptopOutlined className="mr-2 text-[#00ADB5]" />
+                      <span>Technical Skills</span>
                     </div>
-                    <div className="mb-4">
-                      <Text className="text-[#222831] font-semibold text-sm sm:text-base">
-                        Frameworks & Libraries
-                      </Text>
-                      <ul className="list-disc ml-5 mt-3 space-y-1 text-sm sm:text-base">
-                        <li>
-                          <Tag className="bg-[#393E46] text-[#EEEEEE] border-none !rounded-button whitespace-nowrap hover:bg-[#00ADB5] transition-all duration-200 text-xs sm:text-sm">
-                            Bootstrap
+                  }
+                  className="rounded-xl shadow-sm hover:shadow-md transition-shadow"
+                >
+                  <div className="space-y-4">
+                    <div>
+                      <Text strong className="block mb-2">Languages</Text>
+                      <Space size={[8, 8]} wrap>
+                        {skills.languages.map((lang) => (
+                          <Tag key={lang} className="bg-[#00adb520] text-[#00ADB5] border-none rounded-full px-3 py-1">
+                            {lang}
                           </Tag>
-                        </li>
-                        <li>
-                          <Tag className="bg-[#393E46] text-[#EEEEEE] border-none !rounded-button whitespace-nowrap hover:bg-[#00ADB5] transition-all duration-200 text-xs sm:text-sm">
-                            Tailwind CSS
-                          </Tag>
-                        </li>
-                      </ul>
+                        ))}
+                      </Space>
                     </div>
                     <div>
-                      <Text className="text-[#222831] font-semibold text-sm sm:text-base">
-                        Front-End Development
-                      </Text>
-                      <ul className="list-disc ml-5 mt-3 space-y-1 text-sm sm:text-base">
-                        <li>
-                          <Tag className="bg-[#393E46] text-[#EEEEEE] border-none !rounded-button whitespace-nowrap hover:bg-[#00ADB5] transition-all duration-200 text-xs sm:text-sm">
-                            Responsive Design
+                      <Text strong className="block mb-2">Frameworks & Libraries</Text>
+                      <Space size={[8, 8]} wrap>
+                        {skills.frameworks.map((framework) => (
+                          <Tag key={framework} className="bg-[#00adb520] text-[#00ADB5] border-none rounded-full px-3 py-1">
+                            {framework}
                           </Tag>
-                        </li>
-                        <li>
-                          <Tag className="bg-[#393E46] text-[#EEEEEE] border-none !rounded-button whitespace-nowrap hover:bg-[#00ADB5] transition-all duration-200 text-xs sm:text-sm">
-                            UI Implementation
-                          </Tag>
-                        </li>
-                        <li>
-                          <Tag className="bg-[#393E46] text-[#EEEEEE] border-none !rounded-button whitespace-nowrap hover:bg-[#00ADB5] transition-all duration-200 text-xs sm:text-sm">
-                            Cross-browser Compatibility
-                          </Tag>
-                        </li>
-                      </ul>
+                        ))}
+                      </Space>
                     </div>
                   </div>
-                  {/* Right */}
-                  <div>
-                    <div className="mb-4">
-                      <Text className="text-[#222831] font-semibold text-sm sm:text-base">
-                        Tools
-                      </Text>
-                      <ul className="list-disc ml-5 mt-3 space-y-1 text-sm sm:text-base">
-                        <li>
-                          <Tag
-                            className="bg-[#393E46] text-[#EEEEEE] border-none !rounded-button whitespace-nowrap hover:bg-[#00ADB5] transition-all duration-200 text-xs sm:text-sm"
-                          >
-                            Git
-                          </Tag>
-                        </li>
-                        <li>
-                          <Tag
-                            className="bg-[#393E46] text-[#EEEEEE] border-none !rounded-button whitespace-nowrap hover:bg-[#00ADB5] transition-all duration-200 text-xs sm:text-sm"
-                          >
-                            GitHub
-                          </Tag>
-                        </li>
-                        <li>
-                          <Tag
-                            className="bg-[#393E46] text-[#EEEEEE] border-none !rounded-button whitespace-nowrap hover:bg-[#00ADB5] transition-all duration-200 text-xs sm:text-sm"
-                          >
-                            VS Code
-                          </Tag>
-                        </li>
-                      </ul>
+                </Card>
+                {/* Soft Skills */}
+                <Card
+                  title={
+                    <div className="flex items-center">
+                      <TeamOutlined className="mr-2 text-[#00ADB5]" />
+                      <span>Professional Skills</span>
                     </div>
+                  }
+                  className="rounded-xl shadow-sm hover:shadow-md transition-shadow"
+                >
+                  <div>
+                    <Text strong className="block mb-2">Tools</Text>
+                    <Space size={[8, 8]} wrap>
+                      {skills.tools.map((tool) => (
+                        <Tag key={tool} className="bg-[#00adb520] text-[#00ADB5] border-none rounded-full px-3 py-1">
+                          {tool}
+                        </Tag>
+                      ))}
+                    </Space>
+                  </div>
+                  <div className="space-y-4">
                     <div>
-                      <Text className="text-[#222831] font-semibold text-sm sm:text-base">
-                        Soft Skills
-                      </Text>
-                      <ul className="list-disc ml-5 mt-3 space-y-1 text-sm sm:text-base">
-                        <li>
-                          <Tag
-                            className="bg-[#393E46] text-[#EEEEEE] border-none !rounded-button whitespace-nowrap hover:bg-[#00ADB5] transition-all duration-200 text-xs sm:text-sm"
-                          >
-                            Can work under pressure
+                      <Text strong className="block mb-2">Soft Skills</Text>
+                      <Space size={[8, 8]} wrap>
+                        {skills.softSkills.map((skill) => (
+                          <Tag key={skill} className="bg-[#00adb520] text-[#00ADB5] border-none rounded-full px-3 py-1">
+                            {skill}
                           </Tag>
-                        </li>
-                        <li>
-                          <Tag
-                            className="bg-[#393E46] text-[#EEEEEE] border-none !rounded-button whitespace-nowrap hover:bg-[#00ADB5] transition-all duration-200 text-xs sm:text-sm"
+                        ))}
+                      </Space>
+                    </div>
+                  </div>
+                </Card>
+              </div>
+            </section>
+
+           {/* Education */}
+            <section id="education" className="mb-16 scroll-mt-16">
+              <div className="flex items-center mb-7">
+                <div className="w-10 h-10 bg-gradient-to-br from-[#00ADB5] to-[#009ca7] rounded-full flex items-center justify-center mr-4 shadow-md">
+                  <BookOutlined className="text-white text-lg" />
+                </div>
+                <Title
+                  level={2}
+                  className="text-2xl sm:text-3xl font-bold text-[#222831] mb-0 tracking-tight"
+                >
+                  Education
+                </Title>
+              </div>
+
+              <div className="p-5 bg-white rounded-xl shadow-sm">
+                <Title level={4} className="text-lg font-bold mb-1 text-[#222831]">
+                  Eastern Visayas State University
+                </Title>
+                <Text className="text-[#00ADB5] block mb-2 text-sm font-semibold">
+                  2021 – 2025
+                </Text>
+                <Text className="font-medium block mb-2 text-[#393E46]">
+                  Bachelor of Science in Information Technology
+                </Text>
+                <ul className="list-disc pl-5 text-gray-600 space-y-1 text-sm">
+                  <li>Academic Achiever</li>
+                  <li>Best in Thesis/Capstone Project award</li>
+                  <li>Outstanding On-The-Job Training recognition</li>
+                  <li>Dean's Lister</li>
+                </ul>
+              </div>
+            </section>
+
+           {/* Projects */}
+            <section id="projects" className="mb-16 scroll-mt-16">
+              <div className="flex items-center mb-6">
+                <div className="w-8 h-8 bg-[#00ADB5] rounded-full flex items-center justify-center mr-3 shadow-md">
+                  <LaptopOutlined className="text-white" />
+                </div>
+                <Title level={2} className="text-xl sm:text-2xl font-bold text-[#222831] mb-0">
+                  Projects & Experience
+                </Title>
+              </div>
+              <div className="space-y-8">
+                {/* Project 1 */}
+                <Card className="rounded-2xl shadow-md hover:shadow-xl transition-all border-l-4 border-[#00ADB5] bg-gradient-to-br from-[#f8fafc] to-[#e0f7fa]">
+                  <div className="flex flex-col gap-3">
+                    <div className="flex items-center gap-2 mb-1">
+                      <TrophyOutlined className="text-[#00ADB5] text-lg" />
+                      <Title level={4} className="text-lg font-bold mb-0 text-[#222831]">
+                        Enhancing Undergraduate Capstone Projects and Research
+                      </Title>
+                    </div>
+                    <Text className="text-[#00ADB5] font-semibold text-xs sm:text-sm mb-1">
+                      October 2024 - January 2025 &nbsp;|&nbsp; Front-end Developer
+                    </Text>
+                    <Text className="text-gray-700 mb-2 text-sm">
+                      A smart academic management platform with automated grading, advisor recommendations, and scheduling to streamline the capstone process.
+                    </Text>
+                    <ul className="list-disc pl-5 text-gray-700 text-sm mb-2 space-y-1">
+                      <li>Built the front-end for core features such as automated grading, advisor recommendation, and scheduling</li>
+                      <li>Collaborated with a backend team using Django</li>
+                    </ul>
+                    <div className="flex flex-wrap gap-2 mb-1">
+                      <Tag color="#00ADB5">HTML/CSS</Tag>
+                      <Tag color="#00ADB5">JavaScript</Tag>
+                      <Tag color="#00ADB5">Bootstrap</Tag>
+                      <Tag color="#00ADB5">Django</Tag>
+                    </div>
+                  </div>
+                </Card>
+                {/* Project 2 */}
+                <Card className="rounded-2xl shadow-md hover:shadow-xl transition-all border-l-4 border-[#00ADB5] bg-gradient-to-br from-[#f8fafc] to-[#e0f7fa]">
+                  <div className="flex flex-col gap-3">
+                    <div className="flex items-center gap-2 mb-1">
+                      <BookOutlined className="text-[#00ADB5] text-lg" />
+                      <Title level={4} className="text-lg font-bold mb-0 text-[#222831]">
+                        Online Academic Archive and YearBook System
+                      </Title>
+                    </div>
+                    <Text className="text-[#00ADB5] font-semibold text-xs sm:text-sm mb-1">
+                      March 2025 - June 2025 &nbsp;|&nbsp; Front-end Developer (Internship)
+                    </Text>
+                    <Text className="text-gray-700 mb-2 text-sm">
+                      A digital repository for theses, dissertations, and research papers with advanced features for tracking downloads and citations.
+                    </Text>
+                    <ul className="list-disc pl-5 text-gray-700 text-sm mb-2 space-y-1">
+                      <li>Built the front-end interface for uploading and managing theses, dissertations, and re-entry plans</li>
+                      <li>Designed user-facing components for features like download tracking, citation counts, and audit logs</li>
+                      <li>Collaborated with a Django-based back-end team to ensure smooth integration</li>
+                    </ul>
+                    <div className="flex flex-wrap gap-2 mb-1">
+                      <Tag color="#00ADB5">HTML/CSS</Tag>
+                      <Tag color="#00ADB5">JavaScript</Tag>
+                      <Tag color="#00ADB5">Django Templates</Tag>
+                      <Tag color="#00ADB5">Bootstrap</Tag>
+                    </div>
+                  </div>
+                </Card>
+              </div>
+            </section>
+            {/* Portfolio Showcase */}
+            <section id="portfolio" className="mb-16 scroll-mt-16">
+              <div className="flex items-center mb-6">
+                <div className="w-8 h-8 bg-[#00ADB5] rounded-full flex items-center justify-center mr-3">
+                  <ProjectOutlined className="text-white" />
+                </div>
+                <Title level={2} className="text-xl sm:text-2xl font-bold text-[#222831] mb-0">
+                  Portfolio Showcase
+                </Title>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {[
+                  {
+                    title: "Capstone Project Dashboard",
+                    description:
+                      "A smart academic platform recognized among the top capstone projects, featuring automated grading, advisor recommendation, and scheduling to streamline faculty-student collaboration.",
+                    image: "/capstone-project.jpg",
+                    tags: ["React", "Ant Design", "Chart.js"],
+                    link: "#",
+                  },
+                  {
+                    title: "Academic Archive System",
+                    description:
+                      "A digital repository developed for EVSU Graduate School, allowing students to upload theses, dissertations, and re-entry papers with features like citation tracking, download monitoring, and audit logging.",
+                    image: "/gs-project.jpg",
+                    tags: ["Bootstrap", "Django", "JavaScript"],
+                    link: "#",
+                  },
+                ].map((project, index) => (
+                  <Card
+                    key={index}
+                    hoverable
+                    className="rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all group h-full"
+                    cover={
+                      <div className="h-48 overflow-hidden relative">
+                        <img
+                          alt={project.title}
+                          src={project.image}
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        />
+                        <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300"></div>
+                      </div>
+                    }
+                  >
+                    <div className="flex flex-col justify-between h-[240px] p-4">
+                      <div>
+                        <Title level={4} className="text-lg font-bold mb-2">
+                          {project.title}
+                        </Title>
+                        <Text className="text-gray-600 mb-3 block">
+                          {project.description}
+                        </Text>
+                      </div>
+                      <div>
+                        <div className="flex flex-wrap gap-2 mb-3">
+                          {project.tags.map((tag, i) => (
+                            <Tag
+                              key={i}
+                              className="bg-[#00adb520] text-[#00ADB5] border-none rounded-full px-2"
+                            >
+                              {tag}
+                            </Tag>
+                          ))}
+                        </div>
+                        <Button
+                          type="primary"
+                          className="bg-[#00ADB5] border-none hover:bg-[#00D4DD] w-full"
+                          href={project.link}
+                          target="_blank"
+                        >
+                          View Project
+                        </Button>
+                      </div>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+            </section>
+
+
+           {/* Achievements */}
+            <section id="achievements" className="mb-10 scroll-mt-16">
+              <div className="flex items-center mb-6">
+                <div className="w-10 h-10 bg-gradient-to-br from-[#00ADB5] to-[#009ca7] rounded-full flex items-center justify-center mr-4 shadow-md">
+                  <TrophyOutlined className="text-white text-lg" />
+                </div>
+                <Title level={2} className="text-2xl sm:text-3xl font-bold text-[#222831] mb-0 tracking-tight">
+                  Achievements
+                </Title>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {[
+                  {
+                    icon: <SafetyCertificateOutlined className="text-white text-lg" />,
+                    title: "Academic Achiever",
+                    description: "Consistently recognized for academic excellence and high performance.",
+                    certificate: "/academic-achiever.jpg"
+                  },
+                  {
+                    icon: <TrophyOutlined className="text-white text-lg" />,
+                    title: "Best in Thesis/Capstone Project",
+                    description: "Our capstone project, recognized as one of the best in our batch, aimed to improve research output and faculty-student coordination through intelligent features and smart scheduling.",
+                    certificate: "/best-capstone.jpg"
+                  },
+                  {
+                    icon: <UserOutlined className="text-white text-lg" />,
+                    title: "Outstanding On-The-Job Training (Intern)",
+                    description: "Developed for Eastern Visayas State University – Graduate School, this platform functions like a university-specific Google Scholar, allowing graduate students to upload theses, dissertations, and re-entry papers with citation, download tracking, and audit logs.",
+                    certificate: "/ojt.jpg"
+                  },
+                  {
+                    icon: <StarOutlined className="text-white text-lg" />,
+                    title: "Dean's Lister",
+                    description: "Maintained academic excellence throughout the degree program.",
+                    certificate: "/deans-lister.jpg"
+                  }
+                ].map((achievement, index) => (
+                  <Card
+                    key={index}
+                    hoverable
+                    className="rounded-xl shadow-sm hover:shadow-md transition-all flex flex-col h-full"
+                    bodyStyle={{ display: "flex", flexDirection: "column", height: "100%" }}
+                  >
+                    <div className="flex items-start mb-2">
+                      <div className="w-10 h-10 bg-gradient-to-br from-[#00ADB5] to-[#009ca7] rounded-full flex items-center justify-center mr-4 shadow-md">
+                        {achievement.icon}
+                      </div>
+                      <div>
+                        <Title level={4} className="text-lg font-bold mb-1 text-[#222831]">
+                          {achievement.title}
+                        </Title>
+                      </div>
+                    </div>
+                    <Text className="text-gray-600 text-sm mb-2 flex-1">
+                      {achievement.description}
+                    </Text>
+                    <div className="mt-auto">
+                      <img
+                        src={achievement.certificate}
+                        alt={`${achievement.title} Certificate`}
+                        className="rounded-lg shadow max-h-32 w-auto object-contain mx-auto"
+                      />
+                    </div>
+                  </Card>
+                ))}
+              </div>
+            </section>
+
+            {/* Contact */}
+            <section id="contact" className="mb-16 scroll-mt-16">
+              <div className="flex items-center mb-6">
+                <div className="w-8 h-8 bg-[#00ADB5] rounded-full flex items-center justify-center mr-3">
+                  <CommentOutlined className="text-white" />
+                </div>
+                <Title level={2} className="text-xl sm:text-2xl font-bold text-[#222831] mb-0">
+                  Get In Touch
+                </Title>
+              </div>
+              <Card className="rounded-xl shadow-sm p-4 sm:p-6 bg-gradient-to-r from-[#00adb510] to-[#00adb520]">
+                <div className="flex flex-col md:grid md:grid-cols-2 gap-6">
+                  {/* Contact Information */}
+                  <div>
+                    <Title level={4} className="text-base sm:text-lg font-bold mb-4">
+                      Contact Information
+                    </Title>
+                    <div className="space-y-4">
+                      <div className="flex items-start">
+                        <MailOutlined className="text-[#00ADB5] text-lg sm:text-xl mr-3 mt-1" />
+                        <div>
+                          <Text strong className="block text-sm sm:text-base">
+                            Email
+                          </Text>
+                          <Text className="text-gray-600 text-sm sm:text-base">
+                            markanthonyaguirre1234@gmail.com
+                          </Text>
+                          <Button
+                            type="text"
+                            className="text-[#00ADB5] p-0 hover:text-[#00D4DD] text-xs sm:text-sm"
+                            href="mailto:markanthonyaguirre1234@gmail.com"
                           >
-                            Team Player
-                          </Tag>
-                        </li>
-                        <li>
-                          <Tag
-                            className="bg-[#393E46] text-[#EEEEEE] border-none !rounded-button whitespace-nowrap hover:bg-[#00ADB5] transition-all duration-200 text-xs sm:text-sm"
+                            Send Message
+                          </Button>
+                        </div>
+                      </div>
+                      <div className="flex items-start">
+                        <PhoneOutlined className="text-[#00ADB5] text-lg sm:text-xl mr-3 mt-1" />
+                        <div>
+                          <Text strong className="block text-sm sm:text-base">
+                            Phone
+                          </Text>
+                          <Text className="text-gray-600 text-sm sm:text-base">
+                            +63 993 425 3793
+                          </Text>
+                          <Button
+                            type="text"
+                            className="text-[#00ADB5] p-0 hover:text-[#00D4DD] text-xs sm:text-sm"
+                            href="tel:+639934253793"
                           >
-                            Adaptable
-                          </Tag>
-                        </li>
-                        <li>
-                          <Tag
-                            className="bg-[#393E46] text-[#EEEEEE] border-none !rounded-button whitespace-nowrap hover:bg-[#00ADB5] transition-all duration-200 text-xs sm:text-sm"
+                            Call Now
+                          </Button>
+                        </div>
+                      </div>
+                      <div className="flex items-start">
+                        <EnvironmentOutlined className="text-[#00ADB5] text-lg sm:text-xl mr-3 mt-1" />
+                        <div>
+                          <Text strong className="block text-sm sm:text-base">
+                            Location
+                          </Text>
+                          <Text className="text-gray-600 text-sm sm:text-base">
+                            Borseth, Alangalang, Leyte, Philippines
+                          </Text>
+                          <Button
+                            type="text"
+                            className="text-[#00ADB5] p-0 hover:text-[#00D4DD] text-xs sm:text-sm"
+                            href="https://maps.google.com/?q=Borseth,Alangalang,Leyte"
+                            target="_blank"
                           >
-                            Good Communication
-                          </Tag>
-                        </li>
-                      </ul>
+                            View on Map
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {/* Social & Availability */}
+                  <div>
+                    <Title level={4} className="text-base sm:text-lg font-bold mb-4">
+                      Connect With Me
+                    </Title>
+                    <div className="flex flex-wrap gap-3 mb-6">
+                      <Button
+                        shape="circle"
+                        icon={<GithubOutlined />}
+                        href="https://github.com/Maarrrkkkkk"
+                        target="_blank"
+                        className="bg-white border border-gray-200 text-gray-700 hover:border-[#00ADB5] hover:text-[#00ADB5]"
+                        aria-label="GitHub"
+                      />
+                      <Button
+                        shape="circle"
+                        icon={<FacebookFilled />}
+                        href="https://www.facebook.com/share/1ASRfELTm3/"
+                        target="_blank"
+                        className="bg-white border border-gray-200 text-gray-700 hover:border-[#00ADB5] hover:text-[#00ADB5]"
+                        aria-label="Facebook"
+                      />
+                      <Button
+                        shape="circle"
+                        icon={<MailOutlined />}
+                        href="mailto:markanthonyaguirre1234@gmail.com"
+                        className="bg-white border border-gray-200 text-gray-700 hover:border-[#00ADB5] hover:text-[#00ADB5]"
+                        aria-label="Email"
+                      />
+                    </div>
+                    <Title level={4} className="text-base sm:text-lg font-bold mb-4">
+                      Availability
+                    </Title>
+                    <div className="flex items-center">
+                      <div className="w-3 h-3 bg-green-400 rounded-full mr-2 animate-pulse"></div>
+                      <Text className="text-sm sm:text-base">Currently open to new opportunities</Text>
                     </div>
                   </div>
                 </div>
               </Card>
-            </div>
-
-            {/* Education */}
-            <div className="mb-10" id="education">
-              <Title
-                level={2}
-                className="text-lg sm:text-xl font-bold text-[#222831] mb-8 flex items-center"
-              >
-                <BookOutlined className="mr-2 text-primary" /> EDUCATION
-              </Title>
-              <Timeline
-                className="ml-2 sm:ml-4"
-                items={[
-                  {
-                    dot: <div className="bg-[#00ADB5] w-2 h-2 rounded-full"></div>,
-                    children: (
-                      <div className="mb-6">
-                        <Title
-                          level={4}
-                          className="text-base sm:text-lg font-bold text-[#222831] mb-1"
-                        >
-                          Eastern Visayas State University
-                        </Title>
-                        <Text className="text-[#393E46] block mb-2 text-xs sm:text-sm">
-                          (2021-2025)
-                        </Text>
-                        <Text className="text-[#222831] font-medium block mb-2 text-sm sm:text-base">
-                          Bachelor of Science Information Technology
-                        </Text>
-                        <ul className="list-disc ml-5 text-[#393E46] text-xs sm:text-sm">
-                          <li>Academic Achiever</li>
-                          <li>Best in Thesis/Capstone Project</li>
-                          <li>Outstanding On-The-Job Training (Intern)</li>
-                          <li>Dean's Lister</li>
-                        </ul>
-                      </div>
-                    ),
-                  },
-                ]}
-              />
-            </div>
-
-            {/* Projects */}
-            <div className="mb-10" id="projects">
-              <Title
-                level={2}
-                className="text-lg sm:text-xl font-bold text-[#222831] mb-8 flex items-center"
-              >
-                <LaptopOutlined className="mr-2 text-primary" /> ACADEMIC PROJECTS & EXPERIENCE
-              </Title>
-              <Timeline
-                className="ml-2 sm:ml-4"
-                items={[
-                  {
-                    dot: <div className="bg-[#00ADB5] w-2 h-2 rounded-full"></div>,
-                    children: (
-                      <div className="mb-6">
-                        <Title
-                          level={4}
-                          className="text-base sm:text-lg font-bold text-[#222831] mb-1"
-                        >
-                          Enhancing Undergraduate Capstone Projects and Research with Recommender System, Automated Grading, and Scheduling (2024-2025)
-                        </Title>
-                        <Text className="text-[#393E46] font-medium block mb-2 text-xs sm:text-sm">
-                          Role: Front-End Developer
-                        </Text>
-                        <ul className="list-disc ml-5 text-[#393E46] text-xs sm:text-sm">
-                          <li>
-                            Built the front-end for core features such as automated grading, advisor recommendation, and scheduling
-                          </li>
-                          <li>Collaborated with a backend team using Django</li>
-                        </ul>
-                      </div>
-                    ),
-                  },
-                  {
-                    dot: <div className="bg-[#00ADB5] w-2 h-2 rounded-full"></div>,
-                    children: (
-                      <div>
-                        <Title
-                          level={4}
-                          className="text-base sm:text-lg font-bold text-[#222831] mb-1"
-                        >
-                          Online Academic Archive and Yearbook System (OJT, 2025)
-                        </Title>
-                        <Text className="text-[#393E46] font-medium block mb-2 text-xs sm:text-sm">
-                          Role: Front-End Developer
-                        </Text>
-                        <ul className="list-disc ml-5 text-[#393E46] text-xs sm:text-sm">
-                          <li>
-                            Built the front-end interface for uploading and managing theses, dissertations, and re-entry plans
-                          </li>
-                          <li>
-                            Designed user-facing components for features like download tracking, citation counts, and audit logs
-                          </li>
-                          <li>
-                            Collaborated with a Django-based back-end team to ensure smooth integration
-                          </li>
-                        </ul>
-                      </div>
-                    ),
-                  },
-                ]}
-              />
-            </div>
-
-            {/* Portfolio Showcase */}
-            <div className="mb-10" id="portfolio">
-              <Title
-                level={2}
-                className="text-lg sm:text-xl font-bold text-[#222831] mb-4 flex items-center"
-              >
-                <ProjectOutlined className="mr-2 text-primary" /> Portfolio Showcase
-              </Title>
-              <Row gutter={[16, 16]}>
-                <Col xs={24} sm={12}>
-                  <div className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-xl hover:border-primary hover:border flex flex-col h-full">
-                    <div className="h-40 sm:h-48 overflow-hidden">
-                      <img
-                        src="capstone-login.jpg"
-                        alt="Academic Dashboard"
-                        className="w-full h-full object-cover object-top"
-                      />
-                    </div>
-                    <div className="p-4 flex flex-col flex-1">
-                      <Title
-                        level={4}
-                        className="text-base sm:text-lg font-bold text-[#222831] mb-1"
-                      >
-                          Enhancing Undergraduate Capstone Projects and Research with Recommender System, Automated Grading, and Scheduling
-                      </Title>
-                      <Text className="text-[#393E46] block mb-2 text-xs sm:text-sm">
-                        Front-end Development
-                      </Text>
-                      <Text className="text-[#393E46] flex-1 text-xs sm:text-sm">
-                        A responsive login-form for academic management with data visualization and user-friendly controls.
-                      </Text>
-                    </div>
-                  </div>
-                </Col>
-                <Col xs={24} sm={12}>
-                  <div className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-xl hover:border-primary hover:border flex flex-col h-full">
-                    <div className="h-40 sm:h-48 overflow-hidden">
-                      <img
-                        src="gs-project.jpg"
-                        alt="Digital Yearbook"
-                        className="w-full h-full object-cover object-top"
-                      />
-                    </div>
-                    <div className="p-4 flex flex-col flex-1">
-                      <Title
-                        level={4}
-                        className="text-base sm:text-lg font-bold text-[#222831] mb-1"
-                      >
-                        Online Academic Archive and Yearbook System
-                      </Title>
-                      <Text className="text-[#393E46] block mb-2 text-xs sm:text-sm">
-                        Front-end Development
-                      </Text>
-                      <Text className="text-[#393E46] flex-1 text-xs sm:text-sm">
-                        An interactive digital yearbook system with modern interface and seamless navigation.
-                      </Text>
-                    </div>
-                  </div>
-                </Col>
-              </Row>
-            </div>
-
-            {/* Achievements */}
-            <div id="achievements">
-              <Title
-                level={2}
-                className="text-lg sm:text-xl font-bold text-[#222831] mb-4 flex items-center"
-              >
-                <TrophyOutlined className="mr-2 text-primary" /> Achievements
-              </Title>
-              <div className="bg-white rounded-lg shadow-md p-4 sm:p-6">
-                <Row gutter={[16, 16]}>
-                  {[
-                    {
-                      icon: <SafetyCertificateOutlined style={{ fontSize: '2rem' }} />,
-                      title: 'Academic Achiever',
-                      description: 'Consistently recognized for academic excellence and high performance.',
-                    },
-                    {
-                      icon: <TrophyOutlined style={{ fontSize: '2rem' }} />,
-                      title: 'Best in Thesis/Capstone Project',
-                      description: 'Awarded for outstanding innovation and execution in capstone project.',
-                    },
-                    {
-                      icon: <UserOutlined style={{ fontSize: '2rem' }} />,
-                      title: 'Outstanding On-The-Job Training (Intern)',
-                      description: 'Recognized for exceptional performance and contribution during internship.',
-                    },
-                    {
-                      icon: <StarOutlined style={{ fontSize: '2rem' }} />,
-                      title: "Dean's Lister",
-                      description: 'Maintained academic excellence throughout the degree program.',
-                    },
-                  ].map((achievement, index) => (
-                    <Col xs={24} sm={12} key={index}>
-                      <Card
-                        className="bg-[#EEEEEE] rounded-lg h-full flex flex-col items-center justify-between text-center p-4"
-                        hoverable
-                      >
-                        <div className="flex items-center justify-center w-full">
-                          <span
-                            style={{ color: '#00ADB5' }}
-                            className="w-12 h-12 flex items-center justify-center text-2xl mb-3"
-                          >
-                            {achievement.icon}
-                          </span>
-                        </div>
-                        <Title
-                          level={4}
-                          className="text-base sm:text-lg font-bold text-[#222831] mb-2"
-                        >
-                          {achievement.title}
-                        </Title>
-                        <Text className="text-[#393E46] text-xs sm:text-sm">
-                          {achievement.description}
-                        </Text>
-                      </Card>
-                    </Col>
-                  ))}
-                </Row>
-              </div>
-            </div>
-
-            {/* Footer - Mobile */}
-            <Divider
-              className="my-8 md:hidden"
-              style={{ borderColor: '#393E46' }}
-            />
-            <div className="text-center text-[#393E46] pb-6 md:hidden">
-              <Text className="text-xs">
-                © 2025 Mark Anthony Aguirre. All rights reserved.
+            </section>
+            {/* Footer */}
+            <div className="text-center py-6 border-t border-gray-200">
+              <Text className="text-gray-500 text-sm">
+                © {new Date().getFullYear()} Mark Anthony Aguirre. All rights reserved.
               </Text>
             </div>
-            {showTopBtn && (
-              <button
-                onClick={handleBackToTop}
-                className="fixed bottom-6 right-6 z-50 bg-[#393E46] text-[#00ADB5] p-2.5 rounded-full shadow-lg hover:bg-[#00ADB5] hover:text-white transition-colors duration-200"
-                aria-label="Back to Top"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-5 h-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M5 15l7-7 7 7"
-                  />
-                </svg>
-              </button>
-            )}
           </div>
         </Content>
       </Layout>
+
+      {/* Floating Action Button */}
+      <FloatButton.BackTop
+        icon={<UpOutlined />}
+        visibilityHeight={300}
+        type="primary"
+        className="!bg-[#00ADB5] !border-none"
+      />
     </Layout>
   );
 };
