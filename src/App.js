@@ -521,7 +521,7 @@ const Portfolio = () => {
                     description:
                       "A smart academic platform recognized among the top capstone projects, featuring automated grading, advisor recommendation, and scheduling to streamline faculty-student collaboration.",
                     image: "/capstone-project.jpg",
-                    tags: ["React", "Ant Design", "Chart.js"],
+                    tags: ["Bootstrap", "Django", "JavaScript"],
                     link: "#",
                   },
                   {
