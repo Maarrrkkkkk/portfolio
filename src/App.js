@@ -106,7 +106,7 @@ const Portfolio = () => {
      {/* Mobile Header */}
         <Header
           className={`fixed w-full z-50 flex items-center justify-between px-4 transition-all duration-300 ${isScrolled ? 'py-2 shadow-lg bg-[#222831]' : 'py-4 bg-transparent'} sm:px-6 md:hidden`}
-          style={{ height: isScrolled ? '60px' : '80px' }}
+          style={{ height: isScrolled ? '50px' : '70px' }}
         >
           {/* Hamburger menu on the left */}
           <Button
@@ -130,44 +130,105 @@ const Portfolio = () => {
         </Header>
       {/* Mobile Drawer */}
         <Drawer
-          title={
-            <div className="flex items-center">
-              <Text className="text-white">Menu</Text>
+        title={null}
+        placement="left"
+        width={260}
+        onClose={() => setMobileDrawerVisible(false)}
+        open={mobileDrawerVisible}
+        closable={false}
+        bodyStyle={{
+          background: 'linear-gradient(180deg, #222831 0%, #1a1e25 100%)',
+          padding: 0,
+        }}
+        headerStyle={{
+          background: 'linear-gradient(180deg, #222831 0%, #1a1e25 100%)',
+          border: 'none',
+          padding: 0,
+        }}
+        className="md:hidden"
+      >
+        <div className="flex flex-col justify-between h-full">
+          {/* Profile Section */}
+          <div>
+            <div className="flex justify-center mt-6 mb-7">
+              <div className="relative group">
+                <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-[#00ADB5] shadow-xl transition-all duration-500 group-hover:border-[#00D4DD] group-hover:shadow-2xl">
+                  <img
+                    src="/profile.jpg"
+                    alt="Profile"
+                    className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-110"
+                  />
+                </div>
+                <div className="absolute inset-0 rounded-full pointer-events-none group-hover:shadow-[0_0_24px_6px_#00ADB5] transition-all duration-500"></div>
+              </div>
             </div>
-          }
-          placement="left"
-          width={200}
-          onClose={() => setMobileDrawerVisible(false)}
-          open={mobileDrawerVisible}
-          bodyStyle={{ background: '#222831', padding: 0 }}
-          headerStyle={{ background: '#222831', border: 'none' }}
-          className="md:hidden"
-        >
-          <Menu
-            mode="vertical"
-            selectedKeys={[activeSection]}
-            style={{ background: '#222831', border: 'none' }}
-            className="sidebar-menu"
-          >
-            {menuItems.map((item) => (
-              <Menu.Item
-                key={item.key}
-                onClick={() => scrollToSection(item.key)}
-                className={`sidebar-menu-item !rounded-button whitespace-nowrap cursor-pointer transition-all duration-200 ${
-                  activeSection === item.key ? 'active-menu-item' : ''
-                }`}
+            <div className="text-center mb-7">
+              <Title
+                level={4}
+                className="font-bold mb-1 relative name-highlight"
+                style={{
+                  color: '#EEEEEE',
+                  letterSpacing: '0.5px',
+                  lineHeight: '1.3',
+                  marginBottom: 0,
+                }}
               >
-                <span className="inline-flex items-center gap-3 text-sm sm:text-base">
-                  {React.cloneElement(item.icon, {
-                    className: activeSection === item.key ? 'text-[#00ADB5]' : 'text-gray-300'
-                  })}
-                  {item.label}
-                </span>
-              </Menu.Item>
-            ))}
-          </Menu>
-        </Drawer>
-
+                Mark Anthony Aguirre
+              </Title>
+              <Text className="text-base text-[#00ADB5] font-medium block mb-1 tracking-wide">
+                Front-end Web Builder
+              </Text>
+            </div>
+            {/* Menu */}
+            <Menu
+              mode="vertical"
+              selectedKeys={[activeSection]}
+              style={{
+                background: 'transparent',
+                border: 'none',
+                width: '100%',
+              }}
+              className="sidebar-menu"
+            >
+              {menuItems.map((item) => (
+                <Menu.Item
+                  key={item.key}
+                  onClick={() => scrollToSection(item.key)}
+                  className={`sidebar-menu-item !rounded-button whitespace-nowrap cursor-pointer transition-all duration-200 ${
+                    activeSection === item.key ? 'active-menu-item' : ''
+                  }`}
+                  style={{
+                    margin: '6px 0',
+                    fontWeight: activeSection === item.key ? 600 : 400,
+                    color: activeSection === item.key ? '#00ADB5' : '#EEEEEE',
+                    background: activeSection === item.key ? 'rgba(0,173,181,0.10)' : 'transparent',
+                    borderLeft: activeSection === item.key ? '3px solid #00ADB5' : '3px solid transparent',
+                    borderRadius: '0 25px 25px 0',
+                    padding: '0.85rem 1.2rem',
+                    fontSize: '1rem',
+                  }}
+                >
+                  <span className="inline-flex items-center gap-3">
+                    {React.cloneElement(item.icon, {
+                      className: activeSection === item.key ? 'text-[#00ADB5]' : 'text-gray-300',
+                      style: { fontSize: '1.2em', transition: 'color 0.2s' },
+                    })}
+                    {item.label}
+                  </span>
+                </Menu.Item>
+              ))}
+            </Menu>
+          </div>
+          {/* Footer */}
+          <div className="text-center mt-8 mb-4">
+            <Divider style={{ borderColor: '#393e46', margin: '18px 0' }} />
+            <Text className="text-xs text-gray-500 tracking-wide">
+              © {new Date().getFullYear()} Mark Anthony Aguirre<br />
+              <span className="text-[#00ADB5]">All rights reserved.</span>
+            </Text>
+          </div>
+        </div>
+      </Drawer>
       {/* Desktop Sidebar */}
       <Sider
         width={300}
@@ -184,7 +245,7 @@ const Portfolio = () => {
             {/* Profile Image with Glow and Hover */}
             <div className="flex justify-center mt-6 mb-7">
               <div className="relative group">
-                <div className="w-28 h-28 rounded-full overflow-hidden border-4 border-[#00ADB5] shadow-xl transition-all duration-500 group-hover:border-[#00D4DD] group-hover:shadow-2xl">
+                <div className="w-28 h-28 rounded-full overflow-hidden border-2 border-[#00ADB5] shadow-xl transition-all duration-500 group-hover:border-[#00D4DD] group-hover:shadow-2xl">
                   <img
                     src="/profile.jpg"
                     alt="Profile"
@@ -271,7 +332,7 @@ const Portfolio = () => {
             <div className="md:hidden mb-8 pt-16">
               <div className="flex flex-col items-center">
                 <div className="relative group mb-4">
-                  <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-[#00ADB5] shadow-lg transition-all duration-500 group-hover:border-[#00D4DD] group-hover:shadow-xl">
+                  <div className="w-32 h-32 rounded-full overflow-hidden border-2 border-[#00ADB5] shadow-lg transition-all duration-500 group-hover:border-[#00D4DD] group-hover:shadow-xl">
                     <img
                       src="/profile.jpg"
                       alt="Profile"
