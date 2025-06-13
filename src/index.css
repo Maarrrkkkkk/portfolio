@@ -1,5 +1,3 @@
-
-
 /* Tailwind base styles */
 @tailwind base;
 @tailwind components;
@@ -9,16 +7,16 @@
 
 /* Custom bg utility classes for Tailwind custom colors */
 .bg-primary {
-  background-color: #00ADB5 !important;
+  background-color: #00adb5 !important;
 }
 .bg-dark {
   background-color: #222831 !important;
 }
 .bg-dark2 {
-  background-color: #393E46 !important;
+  background-color: #393e46 !important;
 }
 .bg-light {
-  background-color: #EEEEEE !important;
+  background-color: #eeeeee !important;
 }
 
 /* Support for bg-primary/10 (10% opacity) */
@@ -31,7 +29,7 @@
 .!rounded-button {
   border-radius: 9999px !important;
   padding: 0.5rem 1rem !important;
-  font-size: clamp(0.875rem, 2vw, 1rem) !important;
+  font-size: clamp(0.75rem, 2vw, 0.875rem) !important;
   font-weight: 500 !important;
   background: transparent;
   transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.3s;
@@ -50,21 +48,21 @@
 
 .sidebar-menu .ant-menu-item:hover {
   background-color: rgba(0, 173, 181, 0.15) !important;
-  color: #00ADB5 !important;
+  color: #00adb5 !important;
   transform: translateX(5px);
   box-shadow: 0 4px 12px rgba(0, 173, 181, 0.2);
 }
 
 .sidebar-menu .ant-menu-item.ant-menu-item-selected {
   background-color: rgba(0, 173, 181, 0.1) !important;
-  color: #00ADB5 !important;
-  border-left: 3px solid #00ADB5 !important;
+  color: #00adb5 !important;
+  border-left: 3px solid #00adb5 !important;
   font-weight: 600 !important;
 }
 
 .sidebar-menu .ant-menu-item.ant-menu-item-selected:hover {
   background-color: rgba(0, 173, 181, 0.2) !important;
-  color: #00ADB5 !important;
+  color: #00adb5 !important;
 }
 
 /* Name highlight animation */
@@ -86,15 +84,15 @@
 
 /* Custom scrollbar for sidebar and content */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
   background: #222831;
 }
 ::-webkit-scrollbar-thumb {
-  background: #393E46;
+  background: #393e46;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #00ADB5;
+  background: #00adb5;
 }
 
 /* Portfolio card hover effect */
@@ -105,7 +103,7 @@
   box-shadow: 0 8px 32px 0 rgba(0, 173, 181, 0.18);
 }
 .hover\:border-primary:hover {
-  border-color: #00ADB5 !important;
+  border-color: #00adb5 !important;
 }
 
 /* Ant Design Drawer background */
@@ -115,28 +113,28 @@
 
 /* Timeline dot alignment fix */
 .ant-timeline-item-head {
-  margin-top: 0.2rem !important;
+  margin-top: 0.1rem !important;
 }
 
 /* Back to Top Button Animation */
-.fixed.bottom-8.right-8 {
+.fixed.bottom-6.right-6 {
   transition: opacity 0.3s, background 0.2s;
   opacity: 0.95;
 }
-.fixed.bottom-8.right-8:hover {
+.fixed.bottom-6.right-6:hover {
   opacity: 1;
-  background: #00ADB5 !important;
+  background: #00adb5 !important;
 }
 
 /* Footer link hover effect */
 .footer-link,
 .text-dark2:hover {
-  color: #00ADB5 !important;
+  color: #00adb5 !important;
   text-decoration: underline;
 }
 .ant-btn.bg-primary.hovered,
 .bg-primary.hovered {
-  background-color: #393E46 !important;
+  background-color: #393e46 !important;
   color: #fff !important;
 }
 
@@ -150,34 +148,56 @@ img {
 /* Typography improvements */
 body,
 html {
-  font-family: "Inter", "Segoe UI", Arial, sans-serif;
-  background: #EEEEEE;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    sans-serif;
+  background: #eeeeee;
   color: #222831;
   scroll-behavior: smooth;
-  font-size: clamp(14px, 2vw, 16px);
+  font-size: clamp(13px, 2vw, 14px);
+  line-height: 1.6;
 }
-
 
 /* Responsive typography adjustments */
 @media (max-width: 640px) {
-
   .ant-typography h1 {
-    font-size: clamp(2.25rem, 8vw, 2.5rem) !important;
+    font-size: clamp(1.5rem, 6vw, 1.75rem) !important;
+    line-height: 1.3;
   }
   .ant-typography h2 {
-    font-size: clamp(2rem, 7vw, 2.25rem) !important;
+    font-size: clamp(1.25rem, 5vw, 1.5rem) !important;
+    line-height: 1.4;
   }
   .ant-typography h3 {
-    font-size: clamp(2.5rem, 6vw, 1.75rem) !important;
+    font-size: clamp(1rem, 4vw, 1.25rem) !important;
+    line-height: 1.4;
   }
   .ant-typography h4 {
-    font-size: clamp(2.5rem, 5vw, 1.5rem) !important;
+    font-size: clamp(0.875rem, 3.5vw, 1rem) !important;
+    line-height: 1.5;
   }
   .ant-typography {
-    font-size: clamp(1.5rem, 3vw, 1.25rem) !important;
+    font-size: clamp(0.75rem, 3vw, 0.875rem) !important;
+    line-height: 1.6;
   }
 }
 
+@media (min-width: 641px) {
+  .ant-typography h1 {
+    font-size: clamp(1.75rem, 5vw, 2rem) !important;
+  }
+  .ant-typography h2 {
+    font-size: clamp(1.5rem, 4vw, 1.75rem) !important;
+  }
+  .ant-typography h3 {
+    font-size: clamp(1.25rem, 3.5vw, 1.5rem) !important;
+  }
+  .ant-typography h4 {
+    font-size: clamp(1rem, 3vw, 1.25rem) !important;
+  }
+  .ant-typography {
+    font-size: clamp(0.875rem, 2.5vw, 1rem) !important;
+  }
+}
 
 /* Remove outline for mouse users, keep for keyboard users */
 *:focus:not(:focus-visible) {
@@ -186,13 +206,16 @@ html {
 
 /* Ant Design Timeline item content spacing */
 .ant-timeline-item-content {
-  margin-top: 0.2rem !important;
+  margin-top: 0.1rem !important;
 }
 
 /* Utility: Hide scrollbars on mobile for a cleaner look */
 @media (max-width: 768px) {
   ::-webkit-scrollbar {
     display: none;
+  }
+  .ant-timeline-item {
+    padding-bottom: 1rem !important;
   }
 }
 
@@ -212,4 +235,36 @@ a,
 .social-icon:hover {
   transform: translateY(-2px);
   filter: drop-shadow(0 4px 8px rgba(0, 173, 181, 0.3));
+}
+
+/* Ensure buttons are touch-friendly on mobile */
+.ant-btn {
+  min-height: 36px;
+  padding: 0.5rem 1rem;
+}
+
+/* Adjust card padding for mobile */
+.ant-card-body {
+  padding: 1rem !important;
+}
+
+@media (min-width: 640px) {
+  .ant-card-body {
+    padding: 1.5rem !important;
+  }
+}
+
+/* Fix long text overflow in cards */
+.ant-card .ant-typography {
+  word-break: break-word;
+}
+
+/* Improve spacing for lists */
+ul.list-disc {
+  margin-top: 0.5rem;
+  padding-left: 1.25rem;
+}
+
+ul.list-disc li {
+  margin-bottom: 0.25rem;
 }
