@@ -655,7 +655,7 @@ const Portfolio = () => {
                         level={4}
                         className="text-base sm:text-lg font-bold text-[#222831] mb-1"
                       >
-                        Capstone Project Dashboard
+                          Enhancing Undergraduate Capstone Projects and Research with Recommender System, Automated Grading, and Scheduling
                       </Title>
                       <Text className="text-[#393E46] block mb-2 text-xs sm:text-sm">
                         Front-end Development
@@ -680,7 +680,7 @@ const Portfolio = () => {
                         level={4}
                         className="text-base sm:text-lg font-bold text-[#222831] mb-1"
                       >
-                        Online Academic Archive
+                        Online Academic Archive and Yearbook System
                       </Title>
                       <Text className="text-[#393E46] block mb-2 text-xs sm:text-sm">
                         UI/UX Design & Development
