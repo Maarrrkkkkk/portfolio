@@ -1,3 +1,5 @@
+
+
 /* Tailwind base styles */
 @tailwind base;
 @tailwind components;
@@ -7,31 +9,21 @@
 
 /* Custom bg utility classes for Tailwind custom colors */
 .bg-primary {
-  background-color: #00ADB5;
+  background-color: #00ADB5 !important;
 }
 .bg-dark {
-  background-color: #222831;
+  background-color: #222831 !important;
 }
 .bg-dark2 {
-  background-color: #393E46;
+  background-color: #393E46 !important;
 }
 .bg-light {
-  background-color: #EEEEEE;
+  background-color: #EEEEEE !important;
 }
 
 /* Support for bg-primary/10 (10% opacity) */
 .bg-primary\/10 {
-  background-color: rgba(0, 173, 181, 0.1);
-}
-
-/* Typography improvements */
-body,
-html {
-  font-family: "Poppins", "Inter", "Segoe UI", Arial, sans-serif;
-  background: #EEEEEE;
-  color: #222831;
-  scroll-behavior: smooth;
-  font-size: clamp(14px, 2vw, 16px);
+  background-color: rgba(0, 173, 181, 0.1) !important;
 }
 
 /* Rounded button style for Ant Design tags and menu items */
@@ -39,7 +31,7 @@ html {
 .!rounded-button {
   border-radius: 9999px !important;
   padding: 0.5rem 1rem !important;
-  font-size: clamp(0.875rem, 2vw, 1rem);
+  font-size: clamp(0.875rem, 2vw, 1rem) !important;
   font-weight: 500 !important;
   background: transparent;
   transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.3s;
@@ -48,31 +40,31 @@ html {
 
 /* Enhanced Sidebar and Drawer Menu Styles */
 .sidebar-menu .ant-menu-item {
-  height: auto;
-  line-height: normal;
-  padding: 0.75rem 1rem;
-  transition: all 0.3s ease;
-  border-radius: 0 25px 25px 0;
-  margin: 0.25rem 0;
+  height: auto !important;
+  line-height: normal !important;
+  padding: 0.75rem 1rem !important;
+  transition: all 0.3s ease !important;
+  border-radius: 0 25px 25px 0 !important;
+  margin: 0.25rem 0 !important;
 }
 
 .sidebar-menu .ant-menu-item:hover {
-  background-color: rgba(0, 173, 181, 0.15);
-  color: #00ADB5;
+  background-color: rgba(0, 173, 181, 0.15) !important;
+  color: #00ADB5 !important;
   transform: translateX(5px);
   box-shadow: 0 4px 12px rgba(0, 173, 181, 0.2);
 }
 
 .sidebar-menu .ant-menu-item.ant-menu-item-selected {
-  background-color: rgba(0, 173, 181, 0.1);
-  color: #00ADB5;
-  border-left: 3px solid #00ADB5;
-  font-weight: 600;
+  background-color: rgba(0, 173, 181, 0.1) !important;
+  color: #00ADB5 !important;
+  border-left: 3px solid #00ADB5 !important;
+  font-weight: 600 !important;
 }
 
 .sidebar-menu .ant-menu-item.ant-menu-item-selected:hover {
-  background-color: rgba(0, 173, 181, 0.2);
-  color: #00ADB5;
+  background-color: rgba(0, 173, 181, 0.2) !important;
+  color: #00ADB5 !important;
 }
 
 /* Name highlight animation */
@@ -113,17 +105,17 @@ html {
   box-shadow: 0 8px 32px 0 rgba(0, 173, 181, 0.18);
 }
 .hover\:border-primary:hover {
-  border-color: #00ADB5;
+  border-color: #00ADB5 !important;
 }
 
 /* Ant Design Drawer background */
 .ant-drawer-content {
-  background: #222831;
+  background: #222831 !important;
 }
 
 /* Timeline dot alignment fix */
 .ant-timeline-item-head {
-  margin-top: 0.2rem;
+  margin-top: 0.2rem !important;
 }
 
 /* Back to Top Button Animation */
@@ -133,19 +125,19 @@ html {
 }
 .fixed.bottom-8.right-8:hover {
   opacity: 1;
-  background: #00ADB5;
+  background: #00ADB5 !important;
 }
 
 /* Footer link hover effect */
 .footer-link,
 .text-dark2:hover {
-  color: #00ADB5;
+  color: #00ADB5 !important;
   text-decoration: underline;
 }
 .ant-btn.bg-primary.hovered,
 .bg-primary.hovered {
-  background-color: #393E46;
-  color: #fff;
+  background-color: #393E46 !important;
+  color: #fff !important;
 }
 
 /* Responsive image for profile and portfolio */
@@ -155,25 +147,37 @@ img {
   display: block;
 }
 
+/* Typography improvements */
+body,
+html {
+  font-family: "Inter", "Segoe UI", Arial, sans-serif;
+  background: #EEEEEE;
+  color: #222831;
+  scroll-behavior: smooth;
+  font-size: clamp(14px, 2vw, 16px);
+}
+
+
 /* Responsive typography adjustments */
 @media (max-width: 640px) {
 
   .ant-typography h1 {
-    font-size: clamp(2.25rem, 8vw, 2.5rem);
+    font-size: clamp(2.25rem, 8vw, 2.5rem) !important;
   }
   .ant-typography h2 {
-    font-size: clamp(2rem, 7vw, 2.25rem);
+    font-size: clamp(2rem, 7vw, 2.25rem) !important;
   }
   .ant-typography h3 {
-    font-size: clamp(2.5rem, 6vw, 1.75rem);
+    font-size: clamp(2.5rem, 6vw, 1.75rem) !important;
   }
   .ant-typography h4 {
-    font-size: clamp(2.5rem, 5vw, 1.5rem);
+    font-size: clamp(2.5rem, 5vw, 1.5rem) !important;
   }
   .ant-typography {
-    font-size: clamp(1.5rem, 3vw, 1.25rem);
+    font-size: clamp(1.5rem, 3vw, 1.25rem) !important;
   }
 }
+
 
 /* Remove outline for mouse users, keep for keyboard users */
 *:focus:not(:focus-visible) {
@@ -182,7 +186,7 @@ img {
 
 /* Ant Design Timeline item content spacing */
 .ant-timeline-item-content {
-  margin-top: 0.2rem;
+  margin-top: 0.2rem !important;
 }
 
 /* Utility: Hide scrollbars on mobile for a cleaner look */
@@ -209,4 +213,3 @@ a,
   transform: translateY(-2px);
   filter: drop-shadow(0 4px 8px rgba(0, 173, 181, 0.3));
 }
-
