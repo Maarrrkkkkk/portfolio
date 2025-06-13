@@ -683,7 +683,7 @@ const Portfolio = () => {
                         Online Academic Archive and Yearbook System
                       </Title>
                       <Text className="text-[#393E46] block mb-2 text-xs sm:text-sm">
-                        UI/UX Design & Development
+                        Front-end Development
                       </Text>
                       <Text className="text-[#393E46] flex-1 text-xs sm:text-sm">
                         An interactive digital yearbook system with modern interface and seamless navigation.
