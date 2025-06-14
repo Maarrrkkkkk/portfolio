@@ -12,7 +12,8 @@ import {
   Card,
   Space,
   Avatar,
-  FloatButton
+  FloatButton,
+  Modal
 } from 'antd';
 import {
   EnvironmentOutlined,
@@ -43,6 +44,8 @@ const Portfolio = () => {
   const [activeSection, setActiveSection] = useState('about');
   const [mobileDrawerVisible, setMobileDrawerVisible] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedCertificate, setSelectedCertificate] = useState(null);
 
   const scrollToSection = (sectionId) => {
     setActiveSection(sectionId);
@@ -97,35 +100,63 @@ const Portfolio = () => {
     ]
   };
 
+  const achievements = [
+    {
+      icon: <SafetyCertificateOutlined className="text-white text-lg" />,
+      title: "Academic Achiever",
+      description: "Consistently recognized for academic excellence and high performance.",
+      certificate: "/academic-achiever.jpg"
+    },
+    {
+      icon: <TrophyOutlined className="text-white text-lg" />,
+      title: "Best in Thesis/Capstone Project",
+      description: "Our capstone project, recognized as one of the best in our batch...",
+      certificate: "/best-capstone.jpg"
+    },
+    {
+      icon: <UserOutlined className="text-white text-lg" />,
+      title: "Outstanding On-The-Job Training (Intern)",
+      description: "Developed for EVSU – Graduate School, this platform functions...",
+      certificate: "/ojt.jpg"
+    },
+    {
+      icon: <StarOutlined className="text-white text-lg" />,
+      title: "Dean's Lister",
+      description: "Maintained academic excellence throughout the degree program.",
+      certificate: "/deans-lister.jpg"
+    }
+  ];
+
   return (
     <Layout className="min-h-screen bg-gray-50">
-     {/* Mobile Header */}
-        <Header
-          className={`fixed w-full z-50 flex items-center justify-between px-4 transition-all duration-300 ${isScrolled ? 'py-2 shadow-lg bg-[#222831]' : 'py-4 bg-transparent'} sm:px-6 md:hidden`}
-          style={{ height: isScrolled ? '50px' : '70px' }}
-        >
-          {/* Hamburger menu on the left */}
-          <Button
-            type="text"
-            icon={<MenuOutlined className="text-white text-lg" />}
-            onClick={() => setMobileDrawerVisible(true)}
-            className="md:hidden"
-          />
+      {/* Mobile Header */}
+      <Header
+        className={`fixed w-full z-50 flex items-center justify-between px-4 transition-all duration-300 ${isScrolled ? 'py-2 shadow-lg bg-[#222831]' : 'py-4 bg-transparent'} sm:px-6 md:hidden`}
+        style={{ height: isScrolled ? '50px' : '70px' }}
+      >
+        {/* Hamburger menu on the left */}
+        <Button
+          type="text"
+          icon={<MenuOutlined className="text-white text-lg" />}
+          onClick={() => setMobileDrawerVisible(true)}
+          className="md:hidden"
+        />
 
-          {/* Spacer to push profile to the right */}
-          <div className="flex-1"></div>
+        {/* Spacer to push profile to the right */}
+        <div className="flex-1"></div>
 
-          {/* Profile on the right */}
-          <div className="flex items-center">
-            {isScrolled ? (
-              <>
-                <Avatar src="/profile.jpg" size={40} className="border-2 border-[#00ADB5]" />
-              </>
-            ) : null}
-          </div>
-        </Header>
+        {/* Profile on the right */}
+        <div className="flex items-center">
+          {isScrolled ? (
+            <>
+              <Avatar src="/profile.jpg" size={40} className="border-2 border-[#00ADB5]" />
+            </>
+          ) : null}
+        </div>
+      </Header>
+      
       {/* Mobile Drawer */}
-        <Drawer
+      <Drawer
         title={null}
         placement="left"
         width={260}
@@ -225,6 +256,7 @@ const Portfolio = () => {
           </div>
         </div>
       </Drawer>
+      
       {/* Desktop Sidebar */}
       <Sider
         width={300}
@@ -361,7 +393,7 @@ const Portfolio = () => {
                 className="bg-white rounded-xl shadow-lg p-6 transition-all duration-300 hover:shadow-xl border-l-4 border-[#00ADB5]"
               >
                 <Paragraph className="text-[#393E46] text-base leading-relaxed mb-4">
-                 BSIT graduate and aspiring front-end developer with project-based experience in building web applications. Passionate about building practical solutions that improve user experience and eager to contribute to meaningful projects and continue learning in a collaborative environment.
+                 BSIT graduate and aspiring front-end developer with project-based experience in building web applications. Passionate about building practical solutions that improve user experience.Eager to contribute to meaningful projects and continue learning in a collaborative environment.
                 </Paragraph>
                 
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6">
@@ -659,32 +691,7 @@ const Portfolio = () => {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {[
-                  {
-                    icon: <SafetyCertificateOutlined className="text-white text-lg" />,
-                    title: "Academic Achiever",
-                    description: "Consistently recognized for academic excellence and high performance.",
-                    certificate: "/academic-achiever.jpg"
-                  },
-                  {
-                    icon: <TrophyOutlined className="text-white text-lg" />,
-                    title: "Best in Thesis/Capstone Project",
-                    description: "Our capstone project, recognized as one of the best in our batch, aimed to improve research output and faculty-student coordination through intelligent features and smart scheduling.",
-                    certificate: "/best-capstone.jpg"
-                  },
-                  {
-                    icon: <UserOutlined className="text-white text-lg" />,
-                    title: "Outstanding On-The-Job Training (Intern)",
-                    description: "Developed for Eastern Visayas State University – Graduate School, this platform functions like a university-specific Google Scholar, allowing graduate students to upload theses, dissertations, and re-entry papers with citation, download tracking, and audit logs.",
-                    certificate: "/ojt.jpg"
-                  },
-                  {
-                    icon: <StarOutlined className="text-white text-lg" />,
-                    title: "Dean's Lister",
-                    description: "Maintained academic excellence throughout the degree program.",
-                    certificate: "/deans-lister.jpg"
-                  }
-                ].map((achievement, index) => (
+                {achievements.map((achievement, index) => (
                   <Card
                     key={index}
                     hoverable
@@ -704,7 +711,13 @@ const Portfolio = () => {
                     <Text className="text-gray-600 text-sm mb-2 flex-1">
                       {achievement.description}
                     </Text>
-                    <div className="mt-auto">
+                    <div 
+                      className="mt-auto cursor-pointer" 
+                      onClick={() => {
+                        setSelectedCertificate(achievement);
+                        setIsModalVisible(true);
+                      }}
+                    >
                       <img
                         src={achievement.certificate}
                         alt={`${achievement.title} Certificate`}
@@ -849,6 +862,26 @@ const Portfolio = () => {
         type="primary"
         className="!bg-[#00ADB5] !border-none"
       />
+
+      {/* Certificate Modal */}
+      <Modal
+        open={isModalVisible}
+        footer={null}
+        onCancel={() => setIsModalVisible(false)}
+        centered
+        width={800}
+      >
+        {selectedCertificate && (
+          <div className="text-center">
+            <Title level={4} className="mb-4">{selectedCertificate.title}</Title>
+            <img
+              src={selectedCertificate.certificate}
+              alt={`${selectedCertificate.title} Certificate`}
+              className="w-full h-auto rounded-lg shadow-lg"
+            />
+          </div>
+        )}
+      </Modal>
     </Layout>
   );
 };
