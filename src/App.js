@@ -4,17 +4,14 @@ import {
   Layout,
   Typography,
   Tag,
-  Timeline,
+  Carousel,
   Divider,
-  Row,
-  Col,
   Menu,
   Drawer,
   Button,
   Card,
   Space,
   Avatar,
-  Badge,
   FloatButton
 } from 'antd';
 import {
@@ -36,8 +33,7 @@ import {
   CodeOutlined,
   ToolOutlined,
   TeamOutlined,
-  CommentOutlined,
-  BulbOutlined
+  CommentOutlined
 } from '@ant-design/icons';
 
 const { Header, Sider, Content } = Layout;
@@ -565,7 +561,7 @@ const Portfolio = () => {
                 </Card>
               </div>
             </section>
-            {/* Portfolio Showcase */}
+           {/* Portfolio Showcase */}
             <section id="portfolio" className="mb-16 scroll-mt-16">
               <div className="flex items-center mb-6">
                 <div className="w-8 h-8 bg-[#00ADB5] rounded-full flex items-center justify-center mr-3">
@@ -581,7 +577,7 @@ const Portfolio = () => {
                     title: "Capstone Project Dashboard",
                     description:
                       "A smart academic platform recognized among the top capstone projects, featuring automated grading, advisor recommendation, and scheduling to streamline faculty-student collaboration.",
-                    image: "/capstone-project.jpg",
+                    images: ["/capstone-login.jpg", "/capstone-project.jpg", "/capstone-project2.jpg"],
                     tags: ["Bootstrap", "Django", "JavaScript"],
                     link: "#",
                   },
@@ -589,7 +585,7 @@ const Portfolio = () => {
                     title: "Academic Archive System",
                     description:
                       "A digital repository developed for EVSU Graduate School, allowing students to upload theses, dissertations, and re-entry papers with features like citation tracking, download monitoring, and audit logging.",
-                    image: "/gs-project.jpg",
+                    images: ["/gs-project-login.jpg", "/gs-project.jpg", "/gs-project2.jpg", "/gs-project3.jpg", "/gs-project4.jpg"],
                     tags: ["Bootstrap", "Django", "JavaScript"],
                     link: "#",
                   },
@@ -600,11 +596,17 @@ const Portfolio = () => {
                     className="rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all group h-full"
                     cover={
                       <div className="h-48 overflow-hidden relative">
-                        <img
-                          alt={project.title}
-                          src={project.image}
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                        />
+                        <Carousel autoplay effect="fade" dots={{ className: "carousel-dots" }}>
+                          {project.images.map((image, imgIndex) => (
+                            <div key={imgIndex}>
+                              <img
+                                alt={`${project.title} ${imgIndex + 1}`}
+                                src={image}
+                                className="w-full h-48 object-cover"
+                              />
+                            </div>
+                          ))}
+                        </Carousel>
                         <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300"></div>
                       </div>
                     }
