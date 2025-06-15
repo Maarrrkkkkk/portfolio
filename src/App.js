@@ -16,6 +16,7 @@ import {
   Modal
 } from 'antd';
 import {
+  CalendarOutlined,
   EnvironmentOutlined,
   MailOutlined,
   PhoneOutlined,
@@ -593,8 +594,10 @@ const Portfolio = () => {
                 </Card>
               </div>
             </section>
-           {/* Portfolio Showcase */}
-            <section id="portfolio" className="mb-16 scroll-mt-16">
+
+
+             {/* Portfolio Showcase */}
+           <section id="portfolio" className="mb-16 scroll-mt-16">
               <div className="flex items-center mb-6">
                 <div className="w-8 h-8 bg-[#00ADB5] rounded-full flex items-center justify-center mr-3">
                   <ProjectOutlined className="text-white" />
@@ -603,7 +606,9 @@ const Portfolio = () => {
                   Portfolio Showcase
                 </Title>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              
+              {/* Bigger grid layout with larger cards */}
+              <div className="grid grid-cols-1 lg:grid-cols-1 gap-8 xl:gap-10">
                 {[
                   {
                     title: "Capstone Project Dashboard",
@@ -625,16 +630,21 @@ const Portfolio = () => {
                   <Card
                     key={index}
                     hoverable
-                    className="rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all group h-full"
+                    className="rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group flex flex-col h-full"
                     cover={
-                      <div className="h-48 overflow-hidden relative">
-                        <Carousel autoplay effect="fade" dots={{ className: "carousel-dots" }}>
+                      <div className="h-64 sm:h-72 lg:h-64 xl:h-80 overflow-hidden relative bg-gray-50">
+                        <Carousel 
+                          autoplay 
+                          effect="fade" 
+                          dots={{ className: "carousel-dots" }}
+                          autoplaySpeed={4000}
+                        >
                           {project.images.map((image, imgIndex) => (
-                            <div key={imgIndex}>
+                            <div key={imgIndex} className="w-full h-64 sm:h-72 lg:h-64 xl:h-80 p-4">
                               <img
                                 alt={`${project.title} ${imgIndex + 1}`}
                                 src={image}
-                                className="w-full h-48 object-cover"
+                                className="w-full h-full object-contain object-center rounded-lg shadow-sm"
                               />
                             </div>
                           ))}
@@ -643,41 +653,44 @@ const Portfolio = () => {
                       </div>
                     }
                   >
-                    <div className="flex flex-col justify-between h-[240px] p-4">
-                      <div>
-                        <Title level={4} className="text-lg font-bold mb-2">
+                    {/* Bigger card content layout */}
+                    <div className="flex flex-col justify-between flex-1 p-6">
+                      <div className="flex-1">
+                        <Title level={3} className="text-xl sm:text-2xl font-bold mb-4 text-[#222831]">
                           {project.title}
                         </Title>
-                        <Text className="text-gray-600 mb-3 block">
+                        <Text className="text-gray-600 mb-4 block leading-relaxed text-base">
                           {project.description}
                         </Text>
                       </div>
-                      <div>
-                        <div className="flex flex-wrap gap-2 mb-3">
+                      
+                      {/* Bottom section with tags and button */}
+                      <div className="mt-auto">
+                        <div className="flex flex-wrap gap-2 mb-2">
                           {project.tags.map((tag, i) => (
                             <Tag
                               key={i}
-                              className="bg-[#00adb520] text-[#00ADB5] border-none rounded-full px-2"
+                              className="bg-[#00adb520] text-[#00ADB5] border-none rounded-full px-4 py-2 text-sm font-medium"
                             >
                               {tag}
                             </Tag>
                           ))}
                         </div>
-                        <Button
+                        {/* <Button
                           type="primary"
-                          className="bg-[#00ADB5] border-none hover:bg-[#00D4DD] w-full"
+                          size="large"
+                          className="bg-[#00ADB5] border-none hover:bg-[#00D4DD] w-full rounded-lg font-medium h-12"
                           href={project.link}
                           target="_blank"
                         >
                           View Project
-                        </Button>
+                        </Button> */}
                       </div>
                     </div>
                   </Card>
                 ))}
               </div>
-            </section>
-
+           </section>
 
            {/* Achievements */}
             <section id="achievements" className="mb-10 scroll-mt-16">
@@ -690,43 +703,46 @@ const Portfolio = () => {
                 </Title>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {achievements.map((achievement, index) => (
-                  <Card
-                    key={index}
-                    hoverable
-                    className="rounded-xl shadow-sm hover:shadow-md transition-all flex flex-col h-full"
-                    bodyStyle={{ display: "flex", flexDirection: "column", height: "100%" }}
-                  >
-                    <div className="flex items-start mb-2">
-                      <div className="w-10 h-10 bg-gradient-to-br from-[#00ADB5] to-[#009ca7] rounded-full flex items-center justify-center mr-4 shadow-md">
+              <Card
+                className="rounded-xl shadow-lg p-2 sm:p-2 bg-gradient-to-br from-white to-[#00adb508]"
+              >
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+                  {achievements.map((achievement, index) => (
+                    <div
+                      key={index}
+                      className="flex flex-col items-center text-center p-4 rounded-lg bg-white shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100"
+                    >
+                      <div className="w-12 h-12 bg-gradient-to-br from-[#00ADB5] to-[#009ca7] rounded-full flex items-center justify-center mb-4 shadow-md">
                         {achievement.icon}
                       </div>
-                      <div>
-                        <Title level={4} className="text-lg font-bold mb-1 text-[#222831]">
-                          {achievement.title}
-                        </Title>
+                      
+                      <Title level={4} className="text-lg font-bold mb-2 text-[#222831]">
+                        {achievement.title}
+                      </Title>
+                      
+                      <div 
+                        className="mt-auto cursor-pointer w-full" 
+                        onClick={() => {
+                          setSelectedCertificate(achievement);
+                          setIsModalVisible(true);
+                        }}
+                      >
+                        <img
+                          src={achievement.certificate}
+                          alt={`${achievement.title} Certificate`}
+                          className="rounded-lg shadow-sm max-h-32 w-full object-contain hover:shadow-md transition-shadow duration-300"
+                        />
+                      </div>
+                      <div className="flex items-center justify-center mt-2">
+                        <CalendarOutlined className="text-[#00ADB5] text-sm mr-2" />
+                        <Text className="text-gray-500 text-xs font-medium">
+                          Issued June 2025
+                        </Text>
                       </div>
                     </div>
-                    <Text className="text-gray-600 text-sm mb-2 flex-1">
-                      {achievement.description}
-                    </Text>
-                    <div 
-                      className="mt-auto cursor-pointer" 
-                      onClick={() => {
-                        setSelectedCertificate(achievement);
-                        setIsModalVisible(true);
-                      }}
-                    >
-                      <img
-                        src={achievement.certificate}
-                        alt={`${achievement.title} Certificate`}
-                        className="rounded-lg shadow max-h-32 w-auto object-contain mx-auto"
-                      />
-                    </div>
-                  </Card>
-                ))}
-              </div>
+                  ))}
+                </div>
+              </Card>
             </section>
 
             {/* Contact */}
@@ -845,12 +861,13 @@ const Portfolio = () => {
                 </div>
               </Card>
             </section>
+            
             {/* Footer */}
-            <div className="text-center py-6 border-t border-gray-200">
+            {/* <div className="text-center py-6 border-t border-gray-200">
               <Text className="text-gray-500 text-sm">
                 © {new Date().getFullYear()} Mark Anthony Aguirre. All rights reserved.
               </Text>
-            </div>
+            </div> */}
           </div>
         </Content>
       </Layout>
